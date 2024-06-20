@@ -11,6 +11,7 @@
     </aside>
 
     <main class="main-content">
+      <router-view></router-view>
       <slot></slot>
     </main>
 

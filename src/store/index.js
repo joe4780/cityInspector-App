@@ -22,18 +22,25 @@ const db = getFirestore(firebaseApp);
 const store = createStore({
   state: {
     user: null,
-    role: null, // Add role to state
+    token: localStorage.getItem('token') || null, // Initialize token from localStorage
+    role: null,
   },
   mutations: {
     setUser(state, user) {
       state.user = user;
+    },
+    setToken(state, token) {
+      state.token = token;
+      localStorage.setItem('token', token); // Save token to localStorage
     },
     setRole(state, role) {
       state.role = role;
     },
     clearUser(state) {
       state.user = null;
-      state.role = null; // Clear role on logout
+      state.token = null;
+      state.role = null;
+      localStorage.removeItem('token'); // Remove token from localStorage on logout
     },
   },
   actions: {
@@ -57,8 +64,12 @@ const store = createStore({
         commit('setUser', user);
         await dispatch('fetchUserRole', user.uid);
 
+        // Get ID token and save to state and localStorage
+        const token = await user.getIdToken();
+        commit('setToken', token);
+
         // Redirect based on user role
-        const userRole = store.getters.userRole; // Ensure role is part of user data
+        const userRole = store.getters.userRole;
         switch (userRole) {
           case 'Admin':
             router.push('/Admin/AdminDashboard');
@@ -83,7 +94,7 @@ const store = createStore({
         return user;
       } catch (error) {
         console.error('Error signing in:', error.message);
-        throw error; // Propagate error to handle in component
+        throw error;
       }
     },
     async logout({ commit }) {
@@ -93,7 +104,7 @@ const store = createStore({
         router.push('/'); // Redirect to home page after logout
       } catch (error) {
         console.error('Error signing out:', error.message);
-        throw error; // Propagate error to handle in component
+        throw error;
       }
     },
   },
@@ -102,7 +113,10 @@ const store = createStore({
       return !!state.user;
     },
     userRole(state) {
-      return state.role; // Return role from state
+      return state.role;
+    },
+    getToken(state) {
+      return state.token;
     },
   },
 });
@@ -111,6 +125,7 @@ const store = createStore({
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     store.commit('setUser', user);
+    store.commit('setToken', await user.getIdToken()); // Set token on auth state change
     await store.dispatch('fetchUserRole', user.uid);
   } else {
     store.commit('clearUser');

@@ -1,4 +1,5 @@
-const webpack = require('webpack');
+const webpack = require('webpack'); // Import webpack
+const path = require('path'); // Import path for resolving paths
 
 module.exports = {
   transpileDependencies: true,
@@ -17,7 +18,7 @@ module.exports = {
   chainWebpack: config => {
     // Adjust webpack config to resolve components correctly
     config.resolve.alias
-      .set('@', resolve('src')) // Example alias for src folder
+      .set('@', path.resolve(__dirname, 'src')) // Example alias for src folder
 
     // Modify other webpack settings if necessary
   },
