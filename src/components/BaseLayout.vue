@@ -12,7 +12,7 @@
 
     <main class="main-content">
       <slot></slot>
-    </main>````
+    </main>
 
     <footer class="footer">
       <p>&copy; 2024 City Inspector. All rights reserved.</p>
@@ -70,6 +70,7 @@ export default {
 }
 
 .sidebar-footer {
+  margin-top: auto;
   display: flex;
   flex-direction: column;
 }
