@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <DarkModeSwitch />
-    <router-view></router-view>
+    <BaseLayout>
+      <router-view></router-view>
+    </BaseLayout>
   </div>
 </template>
 
@@ -11,6 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import DarkModeSwitch from './components/DarkModeSwitch.vue';
+import BaseLayout from './components/BaseLayout.vue'; // Assuming this is the path
 import router from './router'; // Ensure correct path to your router instance
 
 // Include needed FontAwesome solid icons
@@ -20,6 +23,7 @@ library.add(fas);
 const app = createApp({
   components: {
     DarkModeSwitch,
+    BaseLayout,
   },
 });
 

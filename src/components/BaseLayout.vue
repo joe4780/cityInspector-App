@@ -1,19 +1,18 @@
 <template>
-  <div>
-    <nav class="navbar">
-      <router-link to="/">Home</router-link>
-      <router-link to="/admin/dashboard">Admin Dashboard</router-link>
-      <router-link to="/coordinator/dashboard">Coordinator Dashboard</router-link>
-      <router-link to="/officer/dashboard">Officer Dashboard</router-link>
-      <router-link to="/driver/dashboard">Driver Dashboard</router-link>
-      <router-link to="/traffic/dashboard">Traffic Dashboard</router-link>
-      <router-link to="/profile" class="profile-button">Profile</router-link>
-      <button @click="logout">Logout</button>
-    </nav>
+  <div class="base-layout">
+    <aside class="sidebar">
+      <nav class="sidebar-nav">
+        <!-- Removed Home link -->
+      </nav>
+      <div class="sidebar-footer">
+        <router-link to="/User_Profile" class="profile-button">Profile</router-link>
+        <button @click="logout" class="logout-button">Logout</button>
+      </div>
+    </aside>
 
-    <main>
+    <main class="main-content">
       <slot></slot>
-    </main>
+    </main>````
 
     <footer class="footer">
       <p>&copy; 2024 City Inspector. All rights reserved.</p>
@@ -22,50 +21,93 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
+
 export default {
   name: 'BaseLayout',
-  methods: {
-    logout() {
-      // Clear user token and redirect to login
-      localStorage.removeItem('token');
-      this.$router.push('/');
-    },
+  setup() {
+    const store = useStore();
+    const router = useRouter();
+
+    const logout = async () => {
+      await store.dispatch('logout');
+      router.push('/');
+    };
+
+    return {
+      logout,
+    };
   },
 };
 </script>
 
 <style scoped>
-.navbar {
+.base-layout {
+  display: flex;
+  height: 100vh;
+}
+
+.sidebar {
+  width: 200px;
   background-color: white;
   padding: 1rem;
+  border-right: 1px solid #ddd;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100vh;
 }
 
-.navbar a {
-  color: #2c3e50;
-  margin: 0 1rem;
-  text-decoration: none;
+.sidebar-nav {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.navbar a:hover {
-  text-decoration: underline;
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
 }
 
-.navbar button {
-  background-color: #ff4b5c;
+.sidebar-footer a,
+.sidebar-footer button {
+  display: block;
   color: white;
-  border: none;
+  margin: 0.5rem 0;
+  text-decoration: none;
   padding: 0.5rem 1rem;
-  cursor: pointer;
+  text-align: center;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
-.navbar button:hover {
+.sidebar-footer .profile-button {
+  background-color: #3498db;
+}
+
+.sidebar-footer .profile-button:hover {
+  background-color: #2980b9;
+}
+
+.sidebar-footer .logout-button {
+  background-color: #ff4b5c;
+  border: none;
+  cursor: pointer;
+}
+
+.sidebar-footer .logout-button:hover {
   background-color: #ff1c3c;
+}
+
+.main-content {
+  margin-left: 200px; /* Same as sidebar width */
+  padding: 2rem;
+  flex-grow: 1;
 }
 
 .footer {
@@ -77,33 +119,5 @@ export default {
   width: 100%;
   bottom: 0;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-}
-
-main {
-  padding: 2rem;
-  min-height: calc(100vh - 100px); /* Adjust based on header and footer height */
-}
-
-/* Profile link styling */
-.profile-link {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-.profile-button {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.profile-button:hover {
-  background-color: #2980b9;
 }
 </style>

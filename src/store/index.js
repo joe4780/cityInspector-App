@@ -2,6 +2,7 @@ import { createStore } from 'vuex';
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import router from '../router'; // Ensure correct path to your router instance
 
 const firebaseConfig = {
   apiKey: "AIzaSyAw9iY2-mUnAYXAn6dwXrH_KN99s8UNQIg",
@@ -55,6 +56,30 @@ const store = createStore({
         const user = userCredential.user;
         commit('setUser', user);
         await dispatch('fetchUserRole', user.uid);
+
+        // Redirect based on user role
+        const userRole = store.getters.userRole; // Ensure role is part of user data
+        switch (userRole) {
+          case 'Admin':
+            router.push('/Admin/AdminDashboard');
+            break;
+          case 'CoordinatorHospital':
+            router.push('/CoordinatorHospital/CoordinatorDashboard');
+            break;
+          case 'OfficerPolicestation':
+            router.push('/OfficerPolicestation/OfficerDashboard');
+            break;
+          case 'Driver':
+            router.push('/Driver/DriverDashboard');
+            break;
+          case 'TrafficPolice':
+            router.push('/TrafficPolice/TrafficDashboard');
+            break;
+          default:
+            router.push('/');
+            break;
+        }
+
         return user;
       } catch (error) {
         console.error('Error signing in:', error.message);
@@ -65,6 +90,7 @@ const store = createStore({
       try {
         await signOut(auth);
         commit('clearUser');
+        router.push('/'); // Redirect to home page after logout
       } catch (error) {
         console.error('Error signing out:', error.message);
         throw error; // Propagate error to handle in component
