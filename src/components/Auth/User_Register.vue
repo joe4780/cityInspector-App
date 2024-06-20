@@ -22,9 +22,9 @@
         <label for="role">Role</label>
         <select v-model="form.role" id="role" required>
           <option value="Driver">Driver</option>
-          <option value="Officer(police station)">OfficerPolicestation</option>
-          <option value="Coordinator(hospital)">CoordinatorHospital</option>
-          <option value="Traffic Police">TrafficPolice</option>
+          <option value="OfficerPolicestation">OfficerPolicestation</option>
+          <option value="CoordinatorHospital">CoordinatorHospital</option>
+          <option value="TrafficPolice">TrafficPolice</option>
           <option value="Admin">Admin</option>
         </select>
       </div>

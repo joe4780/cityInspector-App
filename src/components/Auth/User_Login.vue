@@ -75,10 +75,10 @@ export default {
     const handleUserRedirection = (userRole) => {
       const dashboardRoutes = {
         Admin: '/Admin/AdminDashboard',
-        Coordinator: '/CoordinatorHospital/CoordinatorDashboard',
-        Officer: '/OfficerPolicestation/OfficerDashboard',
+        CoordinatorHospital: '/CoordinatorHospital/CoordinatorDashboard',
+        OfficerPolicestation: '/OfficerPolicestation/OfficerDashboard',
         Driver: '/Driver/DriverDashboard',
-        Traffic: '/TrafficPolice/TrafficDashboard',
+        TrafficPolice: '/TrafficPolice/TrafficDashboard',
       };
 
       const targetDashboard = dashboardRoutes[userRole];
