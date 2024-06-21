@@ -2,7 +2,7 @@
   <div class="base-layout">
     <aside class="sidebar">
       <nav class="sidebar-nav">
-        <!-- Removed Home link -->
+        <!-- Add navigation links or content here if needed -->
       </nav>
       <div class="sidebar-footer">
         <router-link to="/User_Profile" class="profile-button">Profile</router-link>
@@ -12,7 +12,6 @@
 
     <main class="main-content">
       <router-view></router-view>
-      <slot></slot>
     </main>
 
     <footer class="footer">
@@ -44,6 +43,7 @@ export default {
 </script>
 
 <style scoped>
+/* Base styles for the layout */
 .base-layout {
   display: flex;
   height: 100vh;
@@ -71,21 +71,22 @@ export default {
 }
 
 .sidebar-footer {
-  margin-top: auto;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem; /* Add spacing between buttons */
+  margin-top: auto; /* Pushes the footer to the bottom */
 }
 
 .sidebar-footer a,
 .sidebar-footer button {
   display: block;
   color: white;
-  margin: 0.5rem 0;
   text-decoration: none;
   padding: 0.5rem 1rem;
   text-align: center;
   border-radius: 4px;
   transition: background-color 0.3s ease;
+  cursor: pointer; /* Add cursor for buttons */
 }
 
 .sidebar-footer .profile-button {
@@ -99,7 +100,6 @@ export default {
 .sidebar-footer .logout-button {
   background-color: #ff4b5c;
   border: none;
-  cursor: pointer;
 }
 
 .sidebar-footer .logout-button:hover {

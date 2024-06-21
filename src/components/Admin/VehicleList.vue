@@ -1,13 +1,20 @@
 <template>
   <div>
-    <h1>Vehicle List</h1>
-    <router-link to="/Admin/AddVehicle">Add Vehicle</router-link>
-    <ul>
-      <li v-for="vehicle in vehicles" :key="vehicle.id">
-        {{ vehicle.registration_number }} - {{ vehicle.vehicle_type }}
-        <router-link :to="`/Admin/EditVehicles/${vehicle.id}`">Edit</router-link>
-      </li>
-    </ul>
+    <h1>CityInspector Vehicles List</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Registration Number</th>
+          <th>Vehicle Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="vehicle in vehicles" :key="vehicle.id">
+          <td>{{ vehicle.registration_number }}</td>
+          <td>{{ vehicle.vehicle_type }}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -40,4 +47,13 @@ export default {
 
 <style scoped>
 /* Add your styles here */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
 </style>

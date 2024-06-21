@@ -11,6 +11,16 @@ import DriverDashboard from '../components/Driver/DriverDashboard.vue';
 import TrafficDashboard from '../components/TrafficPolice/TrafficDashboard.vue';
 import User_Profile from '../components/User_Profile.vue';
 import authMiddleware from '../router/auth.js';
+import AddVehicle from '@/components/Admin/AddVehicle.vue';
+import EditVehicle from '@/components/Admin/EditVehicle.vue';
+import UserManagement from '@/components/Admin/UserManagement.vue';
+import VehicleList from '@/components/Admin/VehicleList.vue';
+import PendingRequest from '@/components/CoordinatorHospital/PendingRequest.vue';
+import DriverApproval from '@/components/DriverApproval.vue';
+import Driver_History from '@/components/Driver_History.vue';
+import TripDetails from '@/components/Driver/TripDetails.vue';
+import PendingApprovals from '@/components/OfficerPolicestation/PendingApprovals.vue';
+
 
 const routes = [
   { path: '/', component: HomePage },
@@ -22,12 +32,21 @@ const routes = [
     component: BaseLayout,
     beforeEnter: authMiddleware,
     children: [
-      { path: 'Admin/AdminDashboard', component: AdminDashboard },
+      { path: 'Admin/AdminDashboard', component: AdminDashboard }, // Remove the extra slash here
       { path: 'CoordinatorHospital/CoordinatorDashboard', component: CoordinatorDashboard },
       { path: 'OfficerPolicestation/OfficerDashboard', component: OfficerDashboard },
       { path: 'Driver/DriverDashboard', component: DriverDashboard },
       { path: 'TrafficPolice/TrafficDashboard', component: TrafficDashboard },
       { path: 'User_Profile', component: User_Profile },
+      { path: 'Admin/AddVehicle', component: AddVehicle },
+      { path: 'Admin/EditVehicle', component:EditVehicle},
+      { path: 'Admin/UserManagement', component:UserManagement},
+      { path: 'Admin/VehicleList', component:VehicleList},
+      { path: 'CoordinatorHospital/PendingRequest',component:PendingRequest},
+      { path: 'DriverApproval', component:DriverApproval},
+      { path: 'Driver_History',component:Driver_History},
+      { path: 'Driver/TripDetails',component:TripDetails},
+      { path: 'OfficerPolicestation/PendingApprovals',component:PendingApprovals},
     ],
   },
 ];

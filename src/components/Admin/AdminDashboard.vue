@@ -1,8 +1,9 @@
 <template>
   <div class="admin-dashboard">
     <nav>
-      <router-link to="/Admin/AddVehicles">Manage Vehicles</router-link>
+      <router-link to="/Admin/AddVehicle">Add Vehicle</router-link>
       <router-link to="/Admin/UserManagement">User Management</router-link>
+      <router-link to="/Admin/EditVehicle">Update Vehicle</router-link>
       <router-link to="/User_Profile">Profile</router-link>
       <router-link to="/Admin/VehicleList">List of Vehicles</router-link>
     </nav>

@@ -1,54 +1,42 @@
 <template>
   <div>
     <h1>User Management</h1>
-    <ul>
-      <li v-for="user in users" :key="user.id">
-        {{ user.email }} - {{ user.role }}
-        <button @click="deleteUser(user.id)">Delete</button>
-      </li>
-    </ul>
-    <form @submit.prevent="addUser">
-      <div>
-        <label for="email">Email:</label>
-        <input type="email" v-model="newUser.email" required />
-      </div>
-      <div>
-        <label for="password">Password:</label>
-        <input type="password" v-model="newUser.password" required />
-      </div>
-      <div>
-        <label for="role">Role:</label>
-        <input type="text" v-model="newUser.role" required />
-      </div>
-      <div>
-        <label for="full_name">Full Name:</label>
-        <input type="text" v-model="newUser.full_name" required />
-      </div>
-      <div>
-        <label for="phone_number">Phone Number:</label>
-        <input type="text" v-model="newUser.phone_number" required />
-      </div>
-      <button type="submit">Add User</button>
-    </form>
+
+    <!-- Table displaying users -->
+    <h2>CityInspector Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Full Name</th>
+          <th>Phone Number</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users" :key="user.id">
+          <td>{{ user.email }}</td>
+          <td>{{ user.role }}</td>
+          <td>{{ user.fullName }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>
+            <button @click="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
 <script>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, collection, getDocs, deleteDoc, setDoc, doc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, deleteDoc } from "firebase/firestore";
 
 export default {
   name: 'UserManagement',
   data() {
     return {
       users: [],
-      newUser: {
-        email: '',
-        password: '',
-        role: '',
-        full_name: '',
-        phone_number: '',
-      },
     };
   },
   created() {
@@ -64,36 +52,10 @@ export default {
         console.error('Error fetching users:', error);
       }
     },
-    async addUser() {
-      const auth = getAuth();
-      const db = getFirestore();
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, this.newUser.email, this.newUser.password);
-        const userId = userCredential.user.uid;
-
-        await setDoc(doc(db, "users", userId), {
-          email: this.newUser.email,
-          role: this.newUser.role,
-          full_name: this.newUser.full_name,
-          phone_number: this.newUser.phone_number,
-        });
-
-        this.newUser = {
-          email: '',
-          password: '',
-          role: '',
-          full_name: '',
-          phone_number: '',
-        };
-        this.fetchUsers();
-      } catch (error) {
-        console.error('Error adding user:', error);
-      }
-    },
     async deleteUser(userId) {
       const db = getFirestore();
       try {
-        await deleteDoc(doc(db, "users", userId));
+        await deleteDoc(collection(db, "users", userId));
         this.fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
@@ -105,4 +67,15 @@ export default {
 
 <style scoped>
 /* Add your styles here */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
 </style>

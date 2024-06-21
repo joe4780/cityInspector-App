@@ -4,9 +4,7 @@
     <table>
       <thead>
         <tr>
-          <th>Trip ID</th>
-          <th>Vehicle ID</th>
-          <th>Driver ID</th>
+          <th>Vehicle Registration Number</th>
           <th>Destination</th>
           <th>Purpose</th>
           <th>Status</th>
@@ -15,9 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="request in pendingRequests" :key="request.id">
-          <td>{{ request.tripId }}</td>
-          <td>{{ request.vehicleId }}</td>
-          <td>{{ request.driverId }}</td>
+          <td>{{ request.registrationNumber }}</td>
           <td>{{ request.destination }}</td>
           <td>{{ request.purpose }}</td>
           <td>{{ request.status }}</td>
@@ -82,4 +78,18 @@ export default {
 
 <style scoped>
 /* Add relevant styling here */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
 </style>
