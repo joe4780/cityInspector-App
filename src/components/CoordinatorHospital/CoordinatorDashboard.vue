@@ -2,7 +2,7 @@
   <div class="coordinator-dashboard">
     <!-- Sidebar with links -->
     <nav>
-      <router-link to="/CoordinatorHospital/PendingRequest">View Pending Requests</router-link>
+      <router-link to="/PendingRequest">View Pending Requests</router-link>
       <router-link to="/DriverApproval">Approve Drivers</router-link>
       <router-link to="/Driver_History">View Approval History</router-link>
       <router-link to="/User_Profile">Profile</router-link>

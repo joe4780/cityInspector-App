@@ -1,16 +1,19 @@
 <template>
-  <div>
-    <h1>Traffic Police Dashboard</h1>
-    <router-link to="/TrafficPolice/DriverVerification">Verify Driver</router-link>
-    <router-link to="/User_Profile">Profile</router-link>
+  <div class="traffic-police-dashboard">
+    <nav>
+      <router-link to="/TrafficPolice/DriverVerification">Verify Driver</router-link>
+      <router-link to="/User_Profile">Profile</router-link>
+    </nav>
 
-    <!-- Example data fetched from Firestore -->
-    <div v-if="verifications.length">
-      <h2>Pending Verifications</h2>
-      <ul>
-        <li v-for="verification in verifications" :key="verification.id">{{ verification.details }}</li>
-      </ul>
-    </div>
+    <main>
+      <h1>Traffic Police Dashboard</h1>
+      <div v-if="verifications.length">
+        <h2>Pending Verifications</h2>
+        <ul>
+          <li v-for="verification in verifications" :key="verification.id">{{ verification.details }}</li>
+        </ul>
+      </div>
+    </main>
   </div>
 </template>
 
@@ -18,7 +21,7 @@
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 export default {
-  name: 'TrafficDashboard',
+  name: 'TrafficPoliceDashboard',
   data() {
     return {
       verifications: [],
@@ -42,5 +45,42 @@ export default {
 </script>
 
 <style scoped>
-/* Add relevant styling here */
+/* Dashboard container */
+.traffic-police-dashboard {
+  display: flex;
+  height: 100%;
+}
+
+/* Sidebar styles */
+nav {
+  width: 200px;
+  background-color: #fff;
+  padding: 1rem;
+  border-right: 1px solid #ddd;
+}
+
+nav a {
+  display: block;
+  color: #2c3e50;
+  margin: 0.5rem 0;
+  text-decoration: none;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Main content area */
+main {
+  flex-grow: 1;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  nav {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+}
 </style>

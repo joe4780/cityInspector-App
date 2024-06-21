@@ -4,13 +4,15 @@
     <table>
       <thead>
         <tr>
-          <th>Driver ID</th>
+          <th>Driver Name</th>
+          <th>Vehicle Registration Number</th>
           <th>Verification Status</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="driver in drivers" :key="driver.id">
-          <td>{{ driver.id }}</td>
+          <td>{{ driver.name }}</td>
+          <td>{{ driver.vehicleRegistrationNumber }}</td>
           <td>{{ driver.verificationStatus }}</td>
         </tr>
       </tbody>
@@ -46,5 +48,17 @@ export default {
 </script>
 
 <style scoped>
-/* Add relevant styling here */
+/* Add your desired styling for the table here (optional) */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
 </style>

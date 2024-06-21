@@ -15,11 +15,11 @@ import AddVehicle from '@/components/Admin/AddVehicle.vue';
 import EditVehicle from '@/components/Admin/EditVehicle.vue';
 import UserManagement from '@/components/Admin/UserManagement.vue';
 import VehicleList from '@/components/Admin/VehicleList.vue';
-import PendingRequest from '@/components/CoordinatorHospital/PendingRequest.vue';
+import PendingRequest from '@/components/PendingRequest.vue';
 import DriverApproval from '@/components/DriverApproval.vue';
 import Driver_History from '@/components/Driver_History.vue';
 import TripDetails from '@/components/Driver/TripDetails.vue';
-import PendingApprovals from '@/components/OfficerPolicestation/PendingApprovals.vue';
+import DriverVerification from '@/components/TrafficPolice/DriverVerification.vue';
 
 
 const routes = [
@@ -42,11 +42,11 @@ const routes = [
       { path: 'Admin/EditVehicle', component:EditVehicle},
       { path: 'Admin/UserManagement', component:UserManagement},
       { path: 'Admin/VehicleList', component:VehicleList},
-      { path: 'CoordinatorHospital/PendingRequest',component:PendingRequest},
+      { path: 'PendingRequest',component:PendingRequest},
       { path: 'DriverApproval', component:DriverApproval},
       { path: 'Driver_History',component:Driver_History},
       { path: 'Driver/TripDetails',component:TripDetails},
-      { path: 'OfficerPolicestation/PendingApprovals',component:PendingApprovals},
+      { path: 'TrafficPolice/DriverVerification/',component:DriverVerification},
     ],
   },
 ];
