@@ -2,7 +2,6 @@
   <div>
     <h1>User Management</h1>
 
-    <!-- Table displaying users -->
     <h2>CityInspector Users</h2>
     <table>
       <thead>
@@ -21,7 +20,7 @@
           <td>{{ user.fullName }}</td>
           <td>{{ user.phoneNumber }}</td>
           <td>
-            <button @click="deleteUser(user.id)">Delete</button>
+            <button @click="deleteUser(user.id)" style="background-color: red; color: white">Delete</button>
           </td>
         </tr>
       </tbody>
@@ -77,5 +76,13 @@ th, td {
   border: 1px solid #ccc;
   padding: 0.5rem;
   text-align: left;
+}
+
+button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  /* Style the button directly in the template for better maintainability */
 }
 </style>
