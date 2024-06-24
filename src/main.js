@@ -6,9 +6,11 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
-import BaseLayout from './components/BaseLayout.vue';
-import { createHead } from '@vueuse/head';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faPlusCircle, faUserCog,faHistory, faEdit, faList, faUserShield } from '@fortawesome/free-solid-svg-icons';
 
+const library = require('@fortawesome/fontawesome-svg-core').library;
+library.add(faPlusCircle, faUserCog,faHistory, faEdit, faList, faUserShield);
 // Firebase configuration (replace with your own config)
 const firebaseConfig = {
   apiKey: "AIzaSyAw9iY2-mUnAYXAn6dwXrH_KN99s8UNQIg",
@@ -44,13 +46,11 @@ const options = {
 };
 
 // Initialize Head Manager
-const head = createHead();
 
 // Initialize Vue app
 createApp(App)
   .use(store)
   .use(router)
   .use(Toast, options)
-  .use(head) // Use @vueuse/head
-  .component('BaseLayout', BaseLayout)
+  .component('font-awesome-icon', FontAwesomeIcon)
   .mount('#app');

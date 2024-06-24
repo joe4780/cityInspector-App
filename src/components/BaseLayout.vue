@@ -2,7 +2,8 @@
   <div class="base-layout">
     <aside class="sidebar">
       <nav class="sidebar-nav">
-        </nav>
+        <!-- Add your navigation links here -->
+      </nav>
       <div class="sidebar-footer">
         <router-link to="/User_Profile" class="profile-button">Profile</router-link>
         <button @click="logout" class="logout-button">Logout</button>
@@ -10,7 +11,9 @@
     </aside>
 
     <main class="main-content">
-      <header class="app-header"> <h1 class="app-title">CityInspector</h1> </header>
+      <header class="app-header">
+        <h1 class="app-title">CityInspector</h1>
+      </header>
       <router-view></router-view>
     </main>
 
@@ -43,7 +46,6 @@ export default {
 </script>
 
 <style scoped>
-/* Base styles for the layout */
 .base-layout {
   display: flex;
   height: 100vh;

@@ -2,32 +2,48 @@
   <BaseLayout>
     <div class="admin-dashboard">
       <nav>
-        <router-link to="/Admin/AddVehicle">Add Vehicle</router-link>
-        <router-link to="/Admin/UserManagement">User Management</router-link>
-        <router-link to="/Admin/EditVehicle">Update Vehicle</router-link>
-        <router-link to="/User_Profile">Profile</router-link>
-        <router-link to="/Admin/VehicleList">List of Vehicles</router-link>
+        <!-- Sidebar content -->
+        <div class="nav-item">
+          <router-link to="/Admin/AddVehicle" class="nav-link">
+            <font-awesome-icon icon="plus-circle" /> Add Vehicle
+          </router-link>
+        </div>
+        <div class="nav-item">
+          <router-link to="/Admin/UserManagement" class="nav-link">
+            <font-awesome-icon icon="user-cog" /> User Management
+          </router-link>
+        </div>
+        <div class="nav-item">
+          <router-link to="/Admin/EditVehicle" class="nav-link">
+            <font-awesome-icon icon="edit" /> Update Vehicle
+          </router-link>
+        </div>
+        <div class="nav-item">
+          <router-link to="/Admin/VehicleList" class="nav-link">
+            <font-awesome-icon icon="list" /> List of Vehicles
+          </router-link>
+        </div>
       </nav>
 
       <main>
-        <h1>Admin Dashboard</h1>
-        <router-view></router-view> </main>
+        <h1><font-awesome-icon icon="user-shield" /> Admin Dashboard</h1>
+        <router-view></router-view>
+      </main>
     </div>
   </BaseLayout>
 </template>
 
 <script>
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
-import { useHead } from '@vueuse/head';
-
 
 export default {
   name: 'AdminDashboard',
+  components: {
+    FontAwesomeIcon,
+  },
   setup() {
     const router = useRouter();
-    useHead({
-      title: 'Admin Dashboard - CityInspector',
-    });
 
     return {
       router,
@@ -49,14 +65,17 @@ nav {
   border-right: 1px solid #ddd;
 }
 
-nav a {
+.nav-item {
+  margin-bottom: 10px; /* Adjust spacing between navigation items */
+}
+
+.nav-link {
   display: block;
   color: #2c3e50;
-  margin: 0.5rem 0;
   text-decoration: none;
 }
 
-nav a:hover {
+.nav-link:hover {
   text-decoration: underline;
 }
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>CityInspector Vehicles List</h1>
+    <h1>Vehicles List</h1>
     <table>
       <thead>
         <tr>

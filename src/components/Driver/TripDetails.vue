@@ -29,6 +29,7 @@
 
 <script>
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 import { useToast } from 'vue-toastification';
 
 export default {
@@ -46,7 +47,22 @@ export default {
   methods: {
     async logTrip() {
       const db = getFirestore();
+      const auth = getAuth();
+      const user = auth.currentUser;
       const toast = useToast(); // Initialize useToast from vue-toastification
+
+      if (!user) {
+        toast.error('User not logged in', {
+          position: 'top-right',
+          timeout: 3000, // Duration the toast should be displayed (in ms)
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          hideProgressBar: false,
+          closeButton: 'button',
+        });
+        return;
+      }
 
       try {
         await addDoc(collection(db, "trips"), {
@@ -54,6 +70,7 @@ export default {
           vehicleType: this.trip.vehicleType,
           destination: this.trip.destination,
           purpose: this.trip.purpose,
+          driverId: user.uid, // Include driverId in the trip document
         });
 
         // Show success toast notification
