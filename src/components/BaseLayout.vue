@@ -2,8 +2,7 @@
   <div class="base-layout">
     <aside class="sidebar">
       <nav class="sidebar-nav">
-        <!-- Add navigation links or content here if needed -->
-      </nav>
+        </nav>
       <div class="sidebar-footer">
         <router-link to="/User_Profile" class="profile-button">Profile</router-link>
         <button @click="logout" class="logout-button">Logout</button>
@@ -11,6 +10,7 @@
     </aside>
 
     <main class="main-content">
+      <header class="app-header"> <h1 class="app-title">CityInspector</h1> </header>
       <router-view></router-view>
     </main>
 

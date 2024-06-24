@@ -6,6 +6,8 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import BaseLayout from './components/BaseLayout.vue';
+import { createHead } from '@vueuse/head';
 
 // Firebase configuration (replace with your own config)
 const firebaseConfig = {
@@ -41,9 +43,14 @@ const options = {
   rtl: false
 };
 
+// Initialize Head Manager
+const head = createHead();
+
 // Initialize Vue app
 createApp(App)
   .use(store)
   .use(router)
   .use(Toast, options)
+  .use(head) // Use @vueuse/head
+  .component('BaseLayout', BaseLayout)
   .mount('#app');

@@ -1,27 +1,33 @@
 <template>
-  <div class="admin-dashboard">
-    <nav>
-      <router-link to="/Admin/AddVehicle">Add Vehicle</router-link>
-      <router-link to="/Admin/UserManagement">User Management</router-link>
-      <router-link to="/Admin/EditVehicle">Update Vehicle</router-link>
-      <router-link to="/User_Profile">Profile</router-link>
-      <router-link to="/Admin/VehicleList">List of Vehicles</router-link>
-    </nav>
+  <BaseLayout>
+    <div class="admin-dashboard">
+      <nav>
+        <router-link to="/Admin/AddVehicle">Add Vehicle</router-link>
+        <router-link to="/Admin/UserManagement">User Management</router-link>
+        <router-link to="/Admin/EditVehicle">Update Vehicle</router-link>
+        <router-link to="/User_Profile">Profile</router-link>
+        <router-link to="/Admin/VehicleList">List of Vehicles</router-link>
+      </nav>
 
-    <main>
-      <h1>Admin Dashboard</h1>
-      <router-view></router-view> <!-- Nested views will render here -->
-    </main>
-  </div>
+      <main>
+        <h1>Admin Dashboard</h1>
+        <router-view></router-view> </main>
+    </div>
+  </BaseLayout>
 </template>
 
 <script>
 import { useRouter } from 'vue-router';
+import { useHead } from '@vueuse/head';
+
 
 export default {
   name: 'AdminDashboard',
   setup() {
     const router = useRouter();
+    useHead({
+      title: 'Admin Dashboard - CityInspector',
+    });
 
     return {
       router,
