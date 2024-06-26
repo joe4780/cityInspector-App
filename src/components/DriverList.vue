@@ -4,20 +4,18 @@
     <table>
       <thead>
         <tr>
-          <th>Driver ID</th>
-          <th>Username</th>
           <th>Full Name</th>
           <th>Phone Number</th>
-          <th>Vehicle Type</th> <!-- New column for vehicle type -->
+          <th>Vehicle Type</th>
+          <th>Vehicle Registration Number</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="driver in drivers" :key="driver.id">
-          <td>{{ driver.id }}</td>
-          <td>{{ driver.username }}</td>
+        <tr v-for="(driver, index) in drivers" :key="index">
           <td>{{ driver.fullName }}</td>
           <td>{{ driver.phoneNumber }}</td>
-          <td>{{ driver.vehicleType }}</td> <!-- Display vehicle type -->
+          <td>{{ driver.vehicleType }}</td>
+          <td>{{ driver.vehicleRegistrationNumber }}</td>
         </tr>
       </tbody>
     </table>
@@ -25,7 +23,7 @@
 </template>
 
 <script>
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, query, getDocs } from "firebase/firestore";
 
 export default {
   name: 'DriverList',
@@ -38,8 +36,17 @@ export default {
     async fetchDrivers() {
       const db = getFirestore();
       try {
-        const querySnapshot = await getDocs(collection(db, "drivers"));
-        this.drivers = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        // Query Drivers collection
+        const q = query(collection(db, "Drivers"));
+        const querySnapshot = await getDocs(q);
+        
+        // Map retrieved documents to desired format
+        this.drivers = querySnapshot.docs.map(doc => ({
+          fullName: doc.data().fullName,
+          phoneNumber: doc.data().phoneNumber,
+          vehicleType: doc.data().vehicleType,
+          vehicleRegistrationNumber: doc.data().vehicleRegistrationNumber,
+        }));
       } catch (error) {
         console.error('Error fetching drivers:', error);
       }
@@ -53,4 +60,15 @@ export default {
 
 <style scoped>
 /* Add relevant styling here */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: left;
+}
 </style>

@@ -19,8 +19,8 @@
           <td>{{ user.role }}</td>
           <td>{{ user.fullName }}</td>
           <td>{{ user.phoneNumber }}</td>
-          <td>
-            <button @click="deleteUser(user.id)" style="background-color: red; color: white">Delete</button>
+          <td @click="deleteUser(user.id)">
+            <font-awesome-icon icon="trash-alt" class="delete-icon" />
           </td>
         </tr>
       </tbody>
@@ -29,10 +29,14 @@
 </template>
 
 <script>
-import { getFirestore, collection, getDocs, deleteDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
   name: 'UserManagement',
+  components: {
+    FontAwesomeIcon,
+  },
   data() {
     return {
       users: [],
@@ -54,7 +58,12 @@ export default {
     async deleteUser(userId) {
       const db = getFirestore();
       try {
-        await deleteDoc(collection(db, "users", userId));
+        // Delete from 'users' collection
+        await deleteDoc(doc(db, "users", userId));
+        
+        // Delete from 'Drivers' collection
+        await deleteDoc(doc(db, "Drivers", userId));
+        
         this.fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
@@ -78,11 +87,12 @@ th, td {
   text-align: left;
 }
 
-button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
+.delete-icon {
+  color: red;
   cursor: pointer;
-  /* Style the button directly in the template for better maintainability */
+}
+
+.delete-icon:hover {
+  color: darkred;
 }
 </style>

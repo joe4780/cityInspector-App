@@ -1,26 +1,19 @@
 <template>
   <div>
-    <h1>Pending Requests</h1>
+    <h1>Trips</h1>
     <table>
       <thead>
         <tr>
           <th>Vehicle Registration Number</th>
           <th>Destination</th>
           <th>Purpose</th>
-          <th>Status</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="request in pendingRequests" :key="request.id">
-          <td>{{ request.registrationNumber }}</td>
-          <td>{{ request.destination }}</td>
-          <td>{{ request.purpose }}</td>
-          <td>{{ request.status }}</td>
-          <td>
-            <button @click="approveRequest(request.id)">Approve</button>
-            <button @click="rejectRequest(request.id)">Reject</button>
-          </td>
+        <tr v-for="trip in trips" :key="trip.id">
+          <td>{{ trip.vehicleRegistrationNumber }}</td>
+          <td>{{ trip.destination }}</td>
+          <td>{{ trip.purpose }}</td>
         </tr>
       </tbody>
     </table>
@@ -28,50 +21,28 @@
 </template>
 
 <script>
-import { getFirestore, collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 export default {
-  name: 'PendingRequests',
+  name: 'NewTrips',
   data() {
     return {
-      pendingRequests: [],
+      trips: [],
     };
   },
   methods: {
-    async fetchPendingRequests() {
+    async fetchTrips() {
       const db = getFirestore();
       try {
-        const querySnapshot = await getDocs(collection(db, "requests"));
-        this.pendingRequests = querySnapshot.docs
-          .map(doc => ({ id: doc.id, ...doc.data() }))
-          .filter(request => request.status === 'pending');
+        const querySnapshot = await getDocs(collection(db, "trips"));
+        this.trips = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       } catch (error) {
-        console.error('Error fetching pending requests:', error);
-      }
-    },
-    async approveRequest(id) {
-      const db = getFirestore();
-      try {
-        const requestDoc = doc(db, "requests", id);
-        await updateDoc(requestDoc, { status: 'approved' });
-        this.fetchPendingRequests();
-      } catch (error) {
-        console.error('Error approving request:', error);
-      }
-    },
-    async rejectRequest(id) {
-      const db = getFirestore();
-      try {
-        const requestDoc = doc(db, "requests", id);
-        await updateDoc(requestDoc, { status: 'rejected' });
-        this.fetchPendingRequests();
-      } catch (error) {
-        console.error('Error rejecting request:', error);
+        console.error('Error fetching trips:', error);
       }
     },
   },
   created() {
-    this.fetchPendingRequests();
+    this.fetchTrips();
   },
 };
 </script>

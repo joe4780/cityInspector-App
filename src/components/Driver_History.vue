@@ -1,21 +1,21 @@
 <template>
-  <div>
+  <div class="approval-history-container">
     <h1>Approval History</h1>
     <table>
       <thead>
         <tr>
-          <th>Driver ID</th>
+          <th>Full Name</th>
           <th>Approval Status</th>
           <th>Approved By</th>
-          <th>Date</th>
+          <th>Date & Time</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="historyItem in history" :key="historyItem.id">
-          <td>{{ historyItem.driverId }}</td>
+          <td>{{ historyItem.fullName }}</td>
           <td>{{ historyItem.approvalStatus }}</td>
           <td>{{ historyItem.approvedBy }}</td>
-          <td>{{ formatDateString(historyItem.date) }}</td>
+          <td>{{ formatDateTimeString(historyItem.dateTime) }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,14 +36,14 @@ export default {
     async fetchHistory() {
       const db = getFirestore();
       try {
-        const querySnapshot = await getDocs(collection(db, "approval_history"));
+        const querySnapshot = await getDocs(collection(db, "history"));
         this.history = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       } catch (error) {
         console.error('Error fetching approval history:', error);
       }
     },
-    formatDateString(date) {
-      return new Date(date).toLocaleDateString();
+    formatDateTimeString(dateTime) {
+      return new Date(dateTime).toLocaleString(); // Adjust date and time format as needed
     },
   },
   created() {
@@ -53,5 +53,22 @@ export default {
 </script>
 
 <style scoped>
-/* Add relevant styling here */
+.approval-history-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  text-align: center;
+}
+
 </style>

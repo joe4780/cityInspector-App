@@ -20,6 +20,8 @@ import DriverApproval from '@/components/DriverApproval.vue';
 import Driver_History from '@/components/Driver_History.vue';
 import TripDetails from '@/components/Driver/TripDetails.vue';
 import DriverVerification from '@/components/TrafficPolice/DriverVerification.vue';
+import DriverList from '@/components/DriverList.vue';
+import AddDriver from '@/components/Admin/AddDriver.vue';
 
 
 const routes = [
@@ -47,6 +49,8 @@ const routes = [
       { path: 'Driver_History',component:Driver_History},
       { path: 'Driver/TripDetails',component:TripDetails},
       { path: 'TrafficPolice/DriverVerification/',component:DriverVerification},
+      { path: 'DriverList', component:DriverList},
+      { path: 'Admin/AddDriver', component:AddDriver},
     ],
   },
 ];

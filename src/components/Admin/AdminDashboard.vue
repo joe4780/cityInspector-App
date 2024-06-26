@@ -27,6 +27,15 @@
 
       <main>
         <h1><font-awesome-icon icon="user-shield" /> Admin Dashboard</h1>
+        <div class="stats-container">
+          <div class="stat-item" v-for="stat in userStats" :key="stat.type">
+            <font-awesome-icon :icon="stat.icon" class="stat-icon" />
+            <div class="stat-info">
+              <h2>{{ stat.count }}</h2>
+              <p>{{ stat.label }}</p>
+            </div>
+          </div>
+        </div>
         <router-view></router-view>
       </main>
     </div>
@@ -36,6 +45,8 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { useRouter } from 'vue-router';
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
+import { ref, onMounted } from 'vue';
 
 export default {
   name: 'AdminDashboard',
@@ -44,9 +55,29 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const userStats = ref([
+      { type: 'Driver', label: 'Drivers', icon: 'user-tie', count: 0 },
+      { type: 'CoordinatorHospital', label: 'Coordinators (Hospital)', icon: 'hospital-user', count: 0 },
+      { type: 'OfficerPolicestation', label: 'Officers (Policestation)', icon: 'user-shield', count: 0 },
+      { type: 'TrafficPolice', label: 'Traffic Police', icon: 'traffic-light', count: 0 }
+    ]);
+
+    const fetchUserCounts = async () => {
+      const db = getFirestore();
+      for (const stat of userStats.value) {
+        const q = query(collection(db, "users"), where("role", "==", stat.type));
+        const querySnapshot = await getDocs(q);
+        stat.count = querySnapshot.size;
+      }
+    };
+
+    onMounted(() => {
+      fetchUserCounts();
+    });
 
     return {
       router,
+      userStats,
     };
   },
 };
@@ -73,10 +104,11 @@ nav {
   display: block;
   color: #2c3e50;
   text-decoration: none;
+  margin: 0.5rem 0;
 }
 
 .nav-link:hover {
-  text-decoration: underline;
+  color: #5193d4;
 }
 
 main {
@@ -84,11 +116,38 @@ main {
   padding: 2rem;
 }
 
-@media (max-width: 768px) {
-  nav {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
-  }
+.stats-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  padding: 1rem;
+}
+
+.stat-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.stat-info h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.stat-info p {
+  margin: 0;
+  color: #666;
 }
 </style>
