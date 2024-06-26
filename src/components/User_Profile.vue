@@ -1,21 +1,44 @@
 <template>
-  <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
+  <div class="container mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
     <h1 class="text-2xl font-bold mb-6">Profile</h1>
-    <form @submit.prevent="updateProfile">
-      <div class="mb-4">
-        <label for="username" class="block text-sm font-medium text-gray-700">Username:</label>
-        <input type="text" id="username" v-model="form.username" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <div class="mb-4">
-        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name:</label>
-        <input type="text" id="fullName" v-model="form.fullName" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <div class="mb-4">
-        <label for="phoneNumber" class="block text-sm font-medium text-gray-700">Phone Number:</label>
-        <input type="text" id="phoneNumber" v-model="form.phoneNumber" class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <button type="submit" class="w-full bg-indigo-600 text-white p-2 rounded-md shadow-md hover:bg-indigo-700">Update Profile</button>
-    </form>
+    <div class="box">
+      <form @submit.prevent="updateProfile">
+        <div class="field mb-4">
+          <label for="username" class="label">Username:</label>
+          <input
+            type="text"
+            id="username"
+            v-model="form.username"
+            class="input"
+            required
+          />
+        </div>
+        <div class="field mb-4">
+          <label for="fullName" class="label">Full Name:</label>
+          <input
+            type="text"
+            id="fullName"
+            v-model="form.fullName"
+            class="input"
+            required
+          />
+        </div>
+        <div class="field mb-4">
+          <label for="phoneNumber" class="label">Phone Number:</label>
+          <input
+            type="text"
+            id="phoneNumber"
+            v-model="form.phoneNumber"
+            class="input"
+            required
+          />
+        </div>
+        <button type="submit" class="button is-primary w-full" :disabled="isLoading">
+          {{ isLoading ? 'Updating...' : 'Update Profile' }}
+        </button>
+      </form>
+      <div v-if="isSuccess" class="mt-2 has-text-success">Profile updated successfully!</div>
+    </div>
   </div>
 </template>
 
@@ -27,17 +50,19 @@ export default {
   data() {
     return {
       form: {
-        username: '', // Populate with user data
+        username: '',
         fullName: '',
         phoneNumber: '',
       },
+      isLoading: false,
+      isSuccess: false,
     };
   },
   methods: {
     async fetchProfile() {
       const db = getFirestore();
       try {
-        const docRef = doc(db, 'profiles', this.$store.state.user.uid); // Assuming 'profiles' collection and user's UID
+        const docRef = doc(db, 'profiles', this.$store.state.user.uid);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           this.form = docSnap.data();
@@ -49,13 +74,16 @@ export default {
       }
     },
     async updateProfile() {
+      this.isLoading = true; // Show loading indicator
       const db = getFirestore();
       try {
-        const docRef = doc(db, 'profiles', this.$store.state.user.uid); // Assuming 'profiles' collection and user's UID
+        const docRef = doc(db, 'profiles', this.$store.state.user.uid);
         await updateDoc(docRef, this.form);
-        console.log('Profile updated successfully');
+        this.isSuccess = true; // Flag successful update
+        this.isLoading = false; // Hide loading indicator
       } catch (error) {
         console.error('Error updating profile:', error);
+        this.isLoading = false; // Hide loading indicator on error
       }
     },
   },
@@ -66,8 +94,40 @@ export default {
 </script>
 
 <style scoped>
-/* Add spacing between fields */
-.mb-4 {
-  margin-bottom: 1rem; /* You can adjust this value as needed */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.box {
+  background-color: #68aff1;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(144, 172, 204, 0.1);
+}
+
+.field {
+  margin-bottom: 1rem;
+}
+
+.label {
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.button {
+  margin-top: 1rem;
+}
+
+.has-text-success {
+  color: green;
 }
 </style>
