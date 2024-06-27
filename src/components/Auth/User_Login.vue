@@ -1,25 +1,28 @@
 <template>
-  <div class="auth-container">
-    <h2>Login</h2>
-    <form @submit.prevent="login">
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input v-model="email" type="email" id="email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input v-model="password" type="password" id="password" required>
-      </div>
-      <button type="submit">Login</button>
-      <div v-if="loading" class="loading-indicator">
-        <span>Loading... </span>
-        <i class="fas fa-spinner fa-spin"></i> </div>
-    </form>
+  <div class="page-container">
+    <div class="auth-container">
+      <h2>Login</h2>
+      <form @submit.prevent="login">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input v-model="email" type="email" id="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input v-model="password" type="password" id="password" required>
+        </div>
+        <button type="submit">Login</button>
+        <div v-if="loading" class="loading-indicator">
+          <span>Loading...</span>
+          <font-awesome-icon icon="spinner" spin />
+        </div>
+      </form>
 
-    <div class="auth-links">
-      <router-link to="/User_Register">Register</router-link>
-      <div></div>
-      <router-link to="/password-reset">Forgot your password? Reset it here</router-link>
+      <div class="auth-links">
+        <router-link to="/User_Register">Register</router-link>
+        <div></div>
+        <router-link to="/password-reset">Forgot your password? Reset it here</router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -102,9 +105,16 @@ export default {
 </script>
 
 <style scoped>
+.page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f2f5;
+}
+
 .auth-container {
   max-width: 400px;
-  margin: auto;
   padding: 1.5rem;
   border: 1px solid #ccc;
   border-radius: 8px;
