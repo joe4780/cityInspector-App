@@ -23,6 +23,11 @@
             <font-awesome-icon icon="list" /> List of Vehicles
           </router-link>
         </div>
+        <div class="nav-item">
+          <router-link to="/Admin/AddDriver" class="nav-link">
+            <font-awesome-icon icon="user-cog" /> Add driver
+          </router-link>
+        </div>
       </nav>
 
       <main>

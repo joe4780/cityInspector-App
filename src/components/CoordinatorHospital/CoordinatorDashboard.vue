@@ -87,7 +87,7 @@ nav {
 }
 
 .nav-link:hover {
-  text-decoration: underline;
+  color: #338ae2;
 }
 
 .nav-link .fa-icon {

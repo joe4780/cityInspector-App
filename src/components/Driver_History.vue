@@ -7,7 +7,7 @@
           <th>Full Name</th>
           <th>Approval Status</th>
           <th>Approved By</th>
-          <th>Date & Time</th>
+          <th>Vehicle Registration Number</th> 
         </tr>
       </thead>
       <tbody>
@@ -15,7 +15,7 @@
           <td>{{ historyItem.fullName }}</td>
           <td>{{ historyItem.approvalStatus }}</td>
           <td>{{ historyItem.approvedBy }}</td>
-          <td>{{ formatDateTimeString(historyItem.dateTime) }}</td>
+          <td>{{ historyItem.vehicleRegistrationNumber }}</td> 
         </tr>
       </tbody>
     </table>
@@ -42,9 +42,6 @@ export default {
         console.error('Error fetching approval history:', error);
       }
     },
-    formatDateTimeString(dateTime) {
-      return new Date(dateTime).toLocaleString(); // Adjust date and time format as needed
-    },
   },
   created() {
     this.fetchHistory();
@@ -70,5 +67,4 @@ th, td {
   padding: 0.5rem;
   text-align: center;
 }
-
 </style>

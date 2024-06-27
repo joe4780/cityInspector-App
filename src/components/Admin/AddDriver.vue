@@ -25,9 +25,9 @@
 
 <script>
 import { ref } from 'vue';
-import { getFirestore, collection, addDoc, doc, getDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { useToast } from 'vue-toastification';
-import 'vue-toastification/dist/index.css'; // Import the CSS for styling
+import 'vue-toastification/dist/index.css';
 
 export default {
   name: 'DriverAdd',
@@ -36,19 +36,18 @@ export default {
     const phoneNumber = ref('');
     const vehicleType = ref('');
     const vehicleRegistrationNumber = ref('');
-    const toast = useToast(); // Access the toast function from Toastification
-
+    const toast = useToast();
+    
     const addDriver = async () => {
       const db = getFirestore();
-      let docRef; // Declare docRef variable here
-
+      
       try {
-        docRef = await addDoc(collection(db, 'Drivers'), {
+        const docRef = await addDoc(collection(db, 'Drivers'), {
           fullName: fullName.value,
           phoneNumber: phoneNumber.value,
           vehicleType: vehicleType.value,
           vehicleRegistrationNumber: vehicleRegistrationNumber.value,
-          role: 'Driver' // Assuming 'Driver' is the role for drivers
+          role: 'Driver' // Assuming 'role' is a default field for a driver
         });
 
         // Show success toast
@@ -59,10 +58,9 @@ export default {
         phoneNumber.value = '';
         vehicleType.value = '';
         vehicleRegistrationNumber.value = '';
-
-        // Example of using docRef to fetch the added document if needed
-        const addedDoc = await getDoc(doc(db, 'users', docRef.id));
-        console.log('Added document:', addedDoc.data());
+        
+        // Log the added document ID for verification
+        console.log('Added document ID:', docRef.id);
 
       } catch (error) {
         console.error('Error adding driver:', error);
@@ -81,7 +79,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .add-driver-container {
