@@ -69,10 +69,20 @@ export default {
 
     const fetchUserCounts = async () => {
       const db = getFirestore();
+      
+      // Fetch drivers count from Drivers collection
+      const driverQuery = query(collection(db, "Drivers"));
+      const driverSnapshot = await getDocs(driverQuery);
+      const driverStat = userStats.value.find(stat => stat.type === 'Driver');
+      driverStat.count = driverSnapshot.size;
+
+      // Fetch other roles count from users collection
       for (const stat of userStats.value) {
-        const q = query(collection(db, "users"), where("role", "==", stat.type));
-        const querySnapshot = await getDocs(q);
-        stat.count = querySnapshot.size;
+        if (stat.type !== 'Driver') {
+          const q = query(collection(db, "users"), where("role", "==", stat.type));
+          const querySnapshot = await getDocs(q);
+          stat.count = querySnapshot.size;
+        }
       }
     };
 

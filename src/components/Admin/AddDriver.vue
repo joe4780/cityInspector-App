@@ -10,14 +10,7 @@
         <label for="phoneNumber">Phone Number:</label>
         <input type="tel" id="phoneNumber" v-model="phoneNumber" required>
       </div>
-      <div class="form-group">
-        <label for="vehicleType">Vehicle Type:</label>
-        <input type="text" id="vehicleType" v-model="vehicleType" required>
-      </div>
-      <div class="form-group">
-        <label for="vehicleRegistrationNumber">Vehicle Registration Number:</label>
-        <input type="text" id="vehicleRegistrationNumber" v-model="vehicleRegistrationNumber" required>
-      </div>
+      <!-- Remove vehicleType and vehicleRegistrationNumber input fields -->
       <button type="submit">Add Driver</button>
     </form>
   </div>
@@ -34,46 +27,46 @@ export default {
   setup() {
     const fullName = ref('');
     const phoneNumber = ref('');
-    const vehicleType = ref('');
-    const vehicleRegistrationNumber = ref('');
     const toast = useToast();
-    
+
     const addDriver = async () => {
       const db = getFirestore();
-      
+
       try {
-        const docRef = await addDoc(collection(db, 'Drivers'), {
+        // Add driver to Drivers collection
+        const driverDocRef = await addDoc(collection(db, 'Drivers'), {
           fullName: fullName.value,
           phoneNumber: phoneNumber.value,
-          vehicleType: vehicleType.value,
-          vehicleRegistrationNumber: vehicleRegistrationNumber.value,
           role: 'Driver' // Assuming 'role' is a default field for a driver
         });
 
+        // Add vehicle information to Vehicles collection using the driver's ID
+        await addDoc(collection(db, 'Vehicles'), {
+          driverId: driverDocRef.id,
+          vehicleType: 'Default Vehicle Type', // Replace with your logic to fetch vehicle type
+          vehicleRegistrationNumber: 'Default Registration Number' // Replace with your logic to fetch registration number
+        });
+
         // Show success toast
-        toast.success('Driver added successfully!');
-        
+        toast.success('Driver and vehicle added successfully!');
+
         // Clear form fields after successful addition
         fullName.value = '';
         phoneNumber.value = '';
-        vehicleType.value = '';
-        vehicleRegistrationNumber.value = '';
-        
+
         // Log the added document ID for verification
-        console.log('Added document ID:', docRef.id);
+        console.log('Added driver document ID:', driverDocRef.id);
 
       } catch (error) {
-        console.error('Error adding driver:', error);
+        console.error('Error adding driver and vehicle:', error);
         // Show error toast
-        toast.error('Failed to add driver. Please try again.');
+        toast.error('Failed to add driver and vehicle. Please try again.');
       }
     };
 
     return {
       fullName,
       phoneNumber,
-      vehicleType,
-      vehicleRegistrationNumber,
       addDriver,
     };
   }

@@ -7,7 +7,7 @@
           <th>Full Name</th>
           <th>Approval Status</th>
           <th>Approved By</th>
-          <th>Vehicle Registration Number</th> 
+          <th>Vehicle Registration Number</th>
         </tr>
       </thead>
       <tbody>
@@ -15,7 +15,7 @@
           <td>{{ historyItem.fullName }}</td>
           <td>{{ historyItem.approvalStatus }}</td>
           <td>{{ historyItem.approvedBy }}</td>
-          <td>{{ historyItem.vehicleRegistrationNumber }}</td> 
+          <td>{{ historyItem.vehicleRegistrationNumber }}</td>
         </tr>
       </tbody>
     </table>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, onSnapshot } from "firebase/firestore";
 
 export default {
   name: 'Driver_History',
@@ -33,14 +33,14 @@ export default {
     };
   },
   methods: {
-    async fetchHistory() {
+    fetchHistory() {
       const db = getFirestore();
-      try {
-        const querySnapshot = await getDocs(collection(db, "history"));
-        this.history = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      } catch (error) {
-        console.error('Error fetching approval history:', error);
-      }
+      const historyCollection = collection(db, "history");
+      
+      // Using onSnapshot for real-time updates
+      onSnapshot(historyCollection, (snapshot) => {
+        this.history = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      });
     },
   },
   created() {

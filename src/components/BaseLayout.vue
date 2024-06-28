@@ -96,7 +96,7 @@ export default {
   background-color: rgb(46, 91, 158);
   color: white;
   text-align: center;
-  padding: 1rem;
+  padding: 0rem;
   position: fixed;
   width: 100%;
   bottom: 0;

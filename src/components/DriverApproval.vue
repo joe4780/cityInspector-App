@@ -30,6 +30,7 @@
 
 <script>
 import { getFirestore, collection, getDocs, doc, updateDoc, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref } from 'vue';
 import { useToast } from "vue-toastification";
 
 export default {
@@ -37,6 +38,7 @@ export default {
   data() {
     return {
       drivers: [],
+      approvedBy: ref('CoordinatorHospital') // Default to CoordinatorHospital, can be changed
     };
   },
   methods: {
@@ -50,33 +52,24 @@ export default {
       }
     },
     async approveDriver(driver) {
-      const db = getFirestore();
-      const driverRef = doc(db, "Drivers", driver.id);
-      try {
-        await updateDoc(driverRef, {
-          approvalStatus: 'Approved'  // Update the approval status field name as per your Firestore structure
-        });
-        this.fetchDrivers();
-        this.showToast('Driver approved successfully!', 'success');
-        await this.logApproval(driver, 'Approved'); // Log approval action
-      } catch (error) {
-        console.error('Error approving driver:', error);
-        this.showToast('Failed to approve driver. Please try again.', 'error');
-      }
+      await this.updateApprovalStatus(driver, 'Approved');
     },
     async rejectDriver(driver) {
+      await this.updateApprovalStatus(driver, 'Rejected');
+    },
+    async updateApprovalStatus(driver, status) {
       const db = getFirestore();
       const driverRef = doc(db, "Drivers", driver.id);
       try {
         await updateDoc(driverRef, {
-          approvalStatus: 'Rejected'  // Update the approval status field name as per your Firestore structure
+          approvalStatus: status
         });
         this.fetchDrivers();
-        this.showToast('Driver rejected successfully!', 'success');
-        await this.logApproval(driver, 'Rejected'); // Log rejection action
+        this.showToast(`Driver ${status.toLowerCase()}ed successfully!`, 'success');
+        await this.logApproval(driver, status); // Log approval/rejection action
       } catch (error) {
-        console.error('Error rejecting driver:', error);
-        this.showToast('Failed to reject driver. Please try again.', 'error');
+        console.error(`Error ${status.toLowerCase()}ing driver:`, error);
+        this.showToast(`Failed to ${status.toLowerCase()} driver. Please try again.`, 'error');
       }
     },
     async logApproval(driver, status) {
@@ -86,16 +79,16 @@ export default {
         await addDoc(historyRef, {
           fullName: driver.fullName,
           approvalStatus: status,
-          approvedBy: "CoordinatorHospital", // Example: replace with actual user or role who approved/rejected
-          dateTime: serverTimestamp() // Use Firestore server timestamp
+          approvedBy: this.approvedBy.value, // Use the selected approvedBy value
+          dateTime: serverTimestamp()
         });
       } catch (error) {
         console.error('Error logging approval:', error);
       }
     },
     showToast(message, type) {
-      const toast = useToast(); // Initialize the useToast function from Vue Toastification
-      toast[type](message); // Show toast based on type (success or error)
+      const toast = useToast();
+      toast[type](message);
     },
   },
   created() {
@@ -128,16 +121,16 @@ th, td {
 }
 
 .button-spacing {
-  margin-left: 10px; /* Adjust the spacing between buttons as needed */
+  margin-left: 10px;
 }
 
 .approve-button {
-  background-color: green; /* Green color for approve button */
+  background-color: green;
   color: white;
 }
 
 .reject-button {
-  background-color: red; /* Red color for reject button */
+  background-color: red;
   color: white;
 }
 

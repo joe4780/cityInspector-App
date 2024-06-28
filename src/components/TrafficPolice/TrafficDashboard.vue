@@ -91,7 +91,7 @@ export default {
     const fetchVehicleCount = async () => {
       const db = getFirestore();
       try {
-        const querySnapshot = await getDocs(collection(db, "vehicles"));
+        const querySnapshot = await getDocs(collection(db, "Vehicles"));
         vehicleCount.value = querySnapshot.size;
       } catch (error) {
         console.error('Error fetching vehicle count:', error);

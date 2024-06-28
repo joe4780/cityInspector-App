@@ -25,6 +25,30 @@
         </tr>
       </tbody>
     </table>
+
+    <h2>Drivers</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Full Name</th>
+          <th>Phone Number</th>
+          <th>Vehicle Type</th>
+          <th>Vehicle Registration Number</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="driver in drivers" :key="driver.id">
+          <td>{{ driver.fullName }}</td>
+          <td>{{ driver.phoneNumber }}</td>
+          <td>{{ driver.vehicleType }}</td>
+          <td>{{ driver.vehicleRegistrationNumber }}</td>
+          <td @click="deleteDriver(driver.id)">
+            <font-awesome-icon icon="trash-alt" class="delete-icon" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -40,10 +64,12 @@ export default {
   data() {
     return {
       users: [],
+      drivers: [],
     };
   },
   created() {
     this.fetchUsers();
+    this.fetchDrivers();
   },
   methods: {
     async fetchUsers() {
@@ -55,18 +81,31 @@ export default {
         console.error('Error fetching users:', error);
       }
     },
+    async fetchDrivers() {
+      const db = getFirestore();
+      try {
+        const querySnapshot = await getDocs(collection(db, "Drivers"));
+        this.drivers = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      } catch (error) {
+        console.error('Error fetching drivers:', error);
+      }
+    },
     async deleteUser(userId) {
       const db = getFirestore();
       try {
-        // Delete from 'users' collection
         await deleteDoc(doc(db, "users", userId));
-        
-        // Delete from 'Drivers' collection
-        await deleteDoc(doc(db, "Drivers", userId));
-        
         this.fetchUsers();
       } catch (error) {
         console.error('Error deleting user:', error);
+      }
+    },
+    async deleteDriver(driverId) {
+      const db = getFirestore();
+      try {
+        await deleteDoc(doc(db, "Drivers", driverId));
+        this.fetchDrivers();
+      } catch (error) {
+        console.error('Error deleting driver:', error);
       }
     },
   },
@@ -74,7 +113,6 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
 table {
   width: 100%;
   border-collapse: collapse;
