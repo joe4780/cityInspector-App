@@ -7,10 +7,11 @@ import { getAuth } from 'firebase/auth';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faUserCheck,faTrashAlt, faSpinner, faUserPlus, faUsers,faCar, faClock, faPlusCircle, faUserCog,faHistory, faEdit,faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight} from '@fortawesome/free-solid-svg-icons';
+import { faUserCheck, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight } from '@fortawesome/free-solid-svg-icons';
 
-const library = require('@fortawesome/fontawesome-svg-core').library;
-library.add(faUserCheck,faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog,faHistory, faEdit,faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
+import { library } from '@fortawesome/fontawesome-svg-core'; // Use import instead of require
+library.add(faUserCheck, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
+
 // Firebase configuration (replace with your own config)
 const firebaseConfig = {
   apiKey: "AIzaSyAw9iY2-mUnAYXAn6dwXrH_KN99s8UNQIg",

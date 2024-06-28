@@ -13,7 +13,15 @@
       <tbody>
         <tr v-for="historyItem in history" :key="historyItem.id">
           <td>{{ historyItem.fullName }}</td>
-          <td>{{ historyItem.approvalStatus }}</td>
+          <td>
+            <span v-if="historyItem.approvalStatus === 'Approved'">
+              <font-awesome-icon icon="check" style="color: green" />
+            </span>
+            <span v-else-if="historyItem.approvalStatus === 'Rejected'">
+              <font-awesome-icon icon="times" style="color: red" />
+            </span>
+            <span v-else>{{ historyItem.approvalStatus }}</span>
+          </td>
           <td>{{ historyItem.approvedBy }}</td>
           <td>{{ historyItem.vehicleRegistrationNumber }}</td>
         </tr>
@@ -24,9 +32,13 @@
 
 <script>
 import { getFirestore, collection, onSnapshot } from "firebase/firestore";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
-  name: 'Driver_History',
+  name: 'DriverHistory',
+  components: {
+    FontAwesomeIcon,
+  },
   data() {
     return {
       history: [],
@@ -36,8 +48,7 @@ export default {
     fetchHistory() {
       const db = getFirestore();
       const historyCollection = collection(db, "history");
-      
-      // Using onSnapshot for real-time updates
+
       onSnapshot(historyCollection, (snapshot) => {
         this.history = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       });
