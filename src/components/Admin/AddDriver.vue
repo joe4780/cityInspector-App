@@ -10,7 +10,14 @@
         <label for="phoneNumber">Phone Number:</label>
         <input type="tel" id="phoneNumber" v-model="phoneNumber" required>
       </div>
-      <!-- Remove vehicleType and vehicleRegistrationNumber input fields -->
+      <div class="form-group">
+        <label for="vehicleType">Vehicle Type:</label>
+        <input type="text" id="vehicleType" v-model="vehicleType" required>
+      </div>
+      <div class="form-group">
+        <label for="vehicleRegistrationNumber">Registration Number:</label>
+        <input type="text" id="vehicleRegistrationNumber" v-model="vehicleRegistrationNumber" required>
+      </div>
       <button type="submit">Add Driver</button>
     </form>
   </div>
@@ -27,6 +34,8 @@ export default {
   setup() {
     const fullName = ref('');
     const phoneNumber = ref('');
+    const vehicleType = ref('');
+    const vehicleRegistrationNumber = ref('');
     const toast = useToast();
 
     const addDriver = async () => {
@@ -37,14 +46,9 @@ export default {
         const driverDocRef = await addDoc(collection(db, 'Drivers'), {
           fullName: fullName.value,
           phoneNumber: phoneNumber.value,
-          role: 'Driver' // Assuming 'role' is a default field for a driver
-        });
-
-        // Add vehicle information to Vehicles collection using the driver's ID
-        await addDoc(collection(db, 'Vehicles'), {
-          driverId: driverDocRef.id,
-          vehicleType: 'Default Vehicle Type', // Replace with your logic to fetch vehicle type
-          vehicleRegistrationNumber: 'Default Registration Number' // Replace with your logic to fetch registration number
+          vehicleType: vehicleType.value,
+          vehicleRegistrationNumber: vehicleRegistrationNumber.value
+          //role: 'Driver' // Assuming 'role' is a default field for a driver
         });
 
         // Show success toast
@@ -53,6 +57,8 @@ export default {
         // Clear form fields after successful addition
         fullName.value = '';
         phoneNumber.value = '';
+        vehicleType.value = '';
+        vehicleRegistrationNumber.value = '';
 
         // Log the added document ID for verification
         console.log('Added driver document ID:', driverDocRef.id);
@@ -67,6 +73,8 @@ export default {
     return {
       fullName,
       phoneNumber,
+      vehicleType,
+      vehicleRegistrationNumber,
       addDriver,
     };
   }

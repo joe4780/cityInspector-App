@@ -20,6 +20,18 @@
           <font-awesome-icon icon="user" /> Driver Dashboard
         </h1>
         
+        <!-- Notification list area -->
+        <div class="notification-list">
+          <!-- Display notifications -->
+          <div class="notification" v-for="(notification, index) in notifications" :key="index" @click="openNotification(notification)">
+            <font-awesome-icon :icon="notification.icon" />
+            <div class="notification-content">
+              <h4>{{ notification.title }}</h4>
+              <p>{{ notification.message }}</p>
+            </div>
+          </div>
+        </div>
+
         <!-- Display trip stats -->
         <div class="stats-container">
           <div class="stats-card">
@@ -32,11 +44,21 @@
         </div>
       </main>
     </div>
+
+    <!-- Notification Modal -->
+    <div v-if="showModal" class="modal">
+      <div class="modal-content">
+        <span class="close" @click="closeModal">&times;</span>
+        <h2>{{ currentNotification.title }}</h2>
+        <p>{{ currentNotification.message }}</p>
+      </div>
+    </div>
   </BaseLayout>
 </template>
 
 <script>
 import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getMessaging, onMessage } from "firebase/messaging";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -47,6 +69,12 @@ export default {
   data() {
     return {
       trips: [],
+      notifications: [],
+      showModal: false,
+      currentNotification: {
+        title: '',
+        message: ''
+      }
     };
   },
   methods: {
@@ -55,17 +83,40 @@ export default {
 
       try {
         const querySnapshot = await getDocs(collection(db, "trips"));
-
         const trips = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
         this.trips = trips;
       } catch (error) {
         console.error('Error fetching trips:', error);
       }
     },
+    initializeMessaging() {
+      const messaging = getMessaging();
+      
+      onMessage(messaging, (payload) => {
+        console.log('Message received. ', payload);
+        this.addNotification(payload.notification.title, payload.notification.body);
+      });
+    },
+    addNotification(title, message) {
+  console.log('Adding notification:', title, message);
+  this.notifications.push({
+    title: title,
+    message: message,
+    icon: ['fas', 'info-circle'] // Default icon
+  });
+},
+
+    openNotification(notification) {
+      this.currentNotification = notification;
+      this.showModal = true;
+    },
+    closeModal() {
+      this.showModal = false;
+    }
   },
   created() {
     this.fetchTrips();
+    this.initializeMessaging();
   },
 };
 </script>
@@ -115,6 +166,10 @@ h1 .fa-icon {
   margin-right: 1.5rem;
 }
 
+.notification-list {
+  margin-bottom: 1rem;
+}
+
 .stats-container {
   display: flex;
   justify-content: left;
@@ -149,5 +204,47 @@ h1 .fa-icon {
   font-size: 1.2rem;
   margin: 0;
   padding: 0;
+}
+
+/* Modal Styles */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }
 </style>

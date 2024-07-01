@@ -22,6 +22,7 @@ import TripDetails from '@/components/Driver/TripDetails.vue';
 import DriverVerification from '@/components/TrafficPolice/DriverVerification.vue';
 import DriverList from '@/components/DriverList.vue';
 import AddDriver from '@/components/Admin/AddDriver.vue';
+import DriverNotification from '@/components/DriverNotification.vue';
 
 
 const routes = [
@@ -51,6 +52,7 @@ const routes = [
       { path: 'TrafficPolice/DriverVerification/',component:DriverVerification},
       { path: 'DriverList', component:DriverList},
       { path: 'Admin/AddDriver', component:AddDriver},
+      { path: 'DriverNotification', component:DriverNotification},
     ],
   },
 ];

@@ -6,11 +6,12 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
+import { getMessaging, onMessage } from 'firebase/messaging';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faUserCheck, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight } from '@fortawesome/free-solid-svg-icons';
+import { faUserCheck, faBell, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core'; // Use import instead of require
-library.add(faUserCheck, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
+library.add(faUserCheck, faBell, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
 
 // Firebase configuration (replace with your own config)
 const firebaseConfig = {
@@ -26,6 +27,20 @@ const firebaseConfig = {
 // Initialize Firebase app
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp); // Initialize Firebase Auth
+const messaging = getMessaging();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then((registration) => {
+      messaging.useServiceWorker(registration);
+    }).catch((err) => {
+      console.error('Service Worker registration failed: ', err);
+    });
+}
+
+onMessage(messaging, (payload) => {
+  console.log('Message received. ', payload);
+});
 
 // Set Firebase Auth instance in Vuex store
 store.$auth = auth;

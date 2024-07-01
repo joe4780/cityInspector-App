@@ -30,7 +30,6 @@
 
 <script>
 import { getFirestore, collection, getDocs, doc, updateDoc, addDoc, serverTimestamp } from "firebase/firestore";
-import { ref } from 'vue';
 import { useToast } from "vue-toastification";
 
 export default {
@@ -38,7 +37,6 @@ export default {
   data() {
     return {
       drivers: [],
-      approvedBy: ref('CoordinatorHospital') // Default to CoordinatorHospital, can be changed
     };
   },
   methods: {
@@ -65,7 +63,7 @@ export default {
           approvalStatus: status
         });
         this.fetchDrivers();
-        this.showToast(`Driver ${status.toLowerCase()}ed successfully!`, 'success');
+        this.showToast(`Driver ${status.toLowerCase()} successfully!`, 'success');
         await this.logApproval(driver, status); // Log approval/rejection action
       } catch (error) {
         console.error(`Error ${status.toLowerCase()}ing driver:`, error);
@@ -79,7 +77,9 @@ export default {
         await addDoc(historyRef, {
           fullName: driver.fullName,
           approvalStatus: status,
-          approvedBy: this.approvedBy.value, // Use the selected approvedBy value
+          approvedBy: 'CoordinatorHospital', // Adjust as needed
+          vehicleType: driver.vehicleType,
+          vehicleRegistrationNumber: driver.vehicleRegistrationNumber,
           dateTime: serverTimestamp()
         });
       } catch (error) {
