@@ -19,7 +19,7 @@
     </main>
 
     <footer class="footer">
-      <p>&copy; 2024 City Inspector. All rights reserved.</p>
+      <p>&copy;2024 City Inspector. All rights reserved.</p>
     </footer>
   </div>
 </template>

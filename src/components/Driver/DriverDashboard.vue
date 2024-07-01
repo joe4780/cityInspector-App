@@ -98,14 +98,13 @@ export default {
       });
     },
     addNotification(title, message) {
-  console.log('Adding notification:', title, message);
-  this.notifications.push({
-    title: title,
-    message: message,
-    icon: ['fas', 'info-circle'] // Default icon
-  });
-},
-
+      console.log('Adding notification:', title, message);
+      this.notifications.push({
+        title: title,
+        message: message,
+        icon: ['fas', 'info-circle'] 
+      });
+    },
     openNotification(notification) {
       this.currentNotification = notification;
       this.showModal = true;
@@ -147,7 +146,7 @@ nav {
 }
 
 .nav-link .fa-icon {
-  margin-right: 1.5rem;
+  margin-right: 0.5rem;
 }
 
 main {
@@ -174,7 +173,7 @@ h1 .fa-icon {
   display: flex;
   justify-content: left;
   align-items: center;
-  margin-top: 2rem; /* Adjust this value to set the spacing below the title */
+  margin-top: 2rem; 
 }
 
 .stats-card {
@@ -186,8 +185,8 @@ h1 .fa-icon {
   border-radius: 50%;
   background-color: #f0f0f0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Center the content */
-  padding: 1rem; /* Add padding if needed */
+  text-align: center; 
+  padding: 1rem; 
 }
 
 .stats-details {
@@ -197,7 +196,7 @@ h1 .fa-icon {
 .stats-number {
   font-size: 2rem;
   font-weight: bold;
-  margin-top: 0.5rem; /* Adjust the spacing between the icon and the number */
+  margin-top: 0.5rem; 
 }
 
 .stats-details h2 {
