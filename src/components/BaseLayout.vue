@@ -1,9 +1,8 @@
 <template>
-  <div class="base-layout">
-    <main class="main-content">
+  <div class="base-layout" :class="{ 'dark-mode': isDarkMode }"> <main class="main-content">
       <header class="app-header">
         <h1 class="app-title">
-          <font-awesome-icon icon="ambulance" class="app-icon" /> 
+          <font-awesome-icon icon="ambulance" class="app-icon" />
           CityInspector
         </h1>
         <div class="header-icons">
@@ -13,7 +12,7 @@
           <button @click="logout" class="logout-button">
             <font-awesome-icon icon="sign-out-alt" />
           </button>
-        </div>
+          <DarkModeSwitch :setDarkMode="setDarkMode" :isDarkMode="isDarkMode" /> </div>
       </header>
       <router-view></router-view>
     </main>
@@ -27,9 +26,14 @@
 <script>
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import DarkModeSwitch from '@/components/DarkModeSwitch.vue'; // Adjust path as per your project structure
+import { setDarkMode, initializeDarkMode } from '@/services/darkmodeService'; // Import darkmodeService functions
 
 export default {
   name: 'BaseLayout',
+  components: {
+    DarkModeSwitch,
+  },
   setup() {
     const store = useStore();
     const router = useRouter();
@@ -39,8 +43,12 @@ export default {
       router.push('/');
     };
 
+    const isDarkMode = initializeDarkMode(); // Call initializeDarkMode
+
     return {
       logout,
+      setDarkMode,
+      isDarkMode,
     };
   },
 };
@@ -51,11 +59,13 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  /* Add your base styles here */
 }
 
 .main-content {
   flex-grow: 1;
   padding: 2rem;
+  /* Add your content styles here */
 }
 
 .app-header {
@@ -63,6 +73,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: rgb(46, 91, 158);
+  /* Light theme header styles */
   padding: 1rem;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -101,5 +112,14 @@ export default {
   width: 100%;
   bottom: 0;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme styles (optional) */
+.dark-mode {
+  .app-header {
+    background-color: #222; /* Dark background color */
+    color: #ddd; /* Light text color */
+  }
+  /* Add other dark theme styles for other components as needed */
 }
 </style>

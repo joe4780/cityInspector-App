@@ -23,6 +23,7 @@ import DriverVerification from '@/components/TrafficPolice/DriverVerification.vu
 import DriverList from '@/components/DriverList.vue';
 import AddDriver from '@/components/Admin/AddDriver.vue';
 import DriverNotification from '@/components/DriverNotification.vue';
+import DarkModeSwitch from '@/components/DarkModeSwitch.vue';
 
 
 const routes = [
@@ -53,6 +54,7 @@ const routes = [
       { path: 'DriverList', component:DriverList},
       { path: 'Admin/AddDriver', component:AddDriver},
       { path: 'DriverNotification', component:DriverNotification},
+      { path: 'DarkModeSwitch', component:DarkModeSwitch},
     ],
   },
 ];

@@ -7,11 +7,13 @@ import { getAuth } from 'firebase/auth';
 import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import { getMessaging, onMessage } from 'firebase/messaging';
+import { initializeDarkMode } from './services/darkmodeService';
+
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faUserCheck, faBell, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight } from '@fortawesome/free-solid-svg-icons';
+import { faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight } from '@fortawesome/free-solid-svg-icons';
 
 import { library } from '@fortawesome/fontawesome-svg-core'; // Use import instead of require
-library.add(faUserCheck, faBell, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
+library.add(faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
 
 // Firebase configuration (replace with your own config)
 const firebaseConfig = {
@@ -28,6 +30,7 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp); // Initialize Firebase Auth
 const messaging = getMessaging();
+initializeDarkMode();
 
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/firebase-messaging-sw.js')
@@ -61,7 +64,6 @@ const options = {
   rtl: false
 };
 
-// Initialize Head Manager
 
 // Initialize Vue app
 createApp(App)
