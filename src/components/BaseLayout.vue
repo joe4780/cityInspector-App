@@ -117,7 +117,7 @@ export default {
 /* Dark theme styles (optional) */
 .dark-mode {
   .app-header {
-    background-color: #222; /* Dark background color */
+    background-color: rgb(46, 91, 158); /* Dark background color */
     color: #ddd; /* Light text color */
   }
   /* Add other dark theme styles for other components as needed */
