@@ -10,10 +10,21 @@ import { getMessaging, onMessage } from 'firebase/messaging';
 import { initializeDarkMode } from './services/darkmodeService';
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight } from '@fortawesome/free-solid-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { 
+  faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, 
+  faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, 
+  faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, 
+  faUserShield, faUserTie, faHospitalUser, faTrafficLight 
+} from '@fortawesome/free-solid-svg-icons';
 
-import { library } from '@fortawesome/fontawesome-svg-core'; // Use import instead of require
-library.add(faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, faUserShield, faUserTie, faHospitalUser, faTrafficLight);
+// Add FontAwesome icons to the library
+library.add(
+  faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, 
+  faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, 
+  faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, 
+  faUserShield, faUserTie, faHospitalUser, faTrafficLight
+);
 
 // Firebase configuration (replace with your own config)
 const firebaseConfig = {
@@ -49,7 +60,7 @@ onMessage(messaging, (payload) => {
 store.$auth = auth;
 
 // Toast options
-const options = {
+const toastOptions = {
   position: POSITION.TOP_RIGHT,
   timeout: 5000,
   closeOnClick: true,
@@ -64,11 +75,13 @@ const options = {
   rtl: false
 };
 
+// Global CSS
+import './assets/styles.css';
 
 // Initialize Vue app
 createApp(App)
   .use(store)
   .use(router)
-  .use(Toast, options)
+  .use(Toast, toastOptions)
   .component('font-awesome-icon', FontAwesomeIcon)
   .mount('#app');

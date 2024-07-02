@@ -1,7 +1,7 @@
 <template>
   <div class="dark-mode-switch" @click="toggleDarkMode">
     <font-awesome-icon :icon="isDarkMode ? 'fas fa-moon' : 'fas fa-sun'" />
-    <span></span>
+    <span>{{ isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
   </div>
 </template>
 
@@ -21,11 +21,22 @@ export default {
   },
   mounted() {
     this.isDarkMode = initializeDarkMode();
+    this.applyTheme();
   },
   methods: {
     toggleDarkMode() {
       this.isDarkMode = !this.isDarkMode;
       setDarkMode(this.isDarkMode);
+      this.applyTheme();
+    },
+    applyTheme() {
+      if (this.isDarkMode) {
+        document.documentElement.classList.add('dark-mode');
+        document.documentElement.classList.remove('light-mode');
+      } else {
+        document.documentElement.classList.add('light-mode');
+        document.documentElement.classList.remove('dark-mode');
+      }
     },
   },
 };

@@ -1,4 +1,24 @@
+/* styles.css */
+
+/* Base Styles */
+:root {
+  --background-color: white;
+  --text-color: black;
+}
+
+.dark-mode {
+  --background-color: black;
+  --text-color: white;
+}
+
+.light-mode {
+  --background-color: white;
+  --text-color: black;
+}
+
 body {
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
