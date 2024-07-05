@@ -1,7 +1,7 @@
 <template>
   <div class="dark-mode-switch" @click="toggleDarkMode">
     <font-awesome-icon :icon="isDarkMode ? 'fas fa-moon' : 'fas fa-sun'" />
-    <span>{{ isDarkMode ? 'Dark Mode' : 'Light Mode' }}</span>
+    <span></span>
   </div>
 </template>
 

@@ -9,7 +9,7 @@
           </router-link>
         </div>
         <div class="nav-item">
-          <router-link to="/DriverApproval" class="nav-link">
+          <router-link to="/officerDriverApproval" class="nav-link">
             <font-awesome-icon icon="user-check" />Approve Driver
           </router-link>
         </div>

@@ -24,12 +24,14 @@ import DriverList from '@/components/DriverList.vue';
 import AddDriver from '@/components/Admin/AddDriver.vue';
 import DriverNotification from '@/components/DriverNotification.vue';
 import DarkModeSwitch from '@/components/DarkModeSwitch.vue';
+import officerDriverApproval from '@/components/OfficerPolicestation/officerDriverApproval.vue';
 
 
 const routes = [
   { path: '/', component: HomePage },
   { path: '/User_Login', component: User_Login },
   { path: '/User_Register', component: User_Register },
+  { path: '/officerDriverApproval', component: officerDriverApproval },
   { path: '/password-reset', component: PasswordReset },
   {
     path: '/',
@@ -55,6 +57,7 @@ const routes = [
       { path: 'Admin/AddDriver', component:AddDriver},
       { path: 'DriverNotification', component:DriverNotification},
       { path: 'DarkModeSwitch', component:DarkModeSwitch},
+      //{ path: 'OfficerPolicestation/officerDriverApproval', component:officerDriverApproval},
     ],
   },
 ];

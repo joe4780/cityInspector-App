@@ -16,7 +16,7 @@ export default function authMiddleware(to, from, next) {
   const roleRoutes = {
     Admin: ['/Admin/AdminDashboard', '/Admin/AddVehicles', '/Admin/Vehicles', '/Admin/EditVehicle', '/Admin/UserManagement'],
     CoordinatorHospital: ['/CoordinatorHospital/CoordinatorDashboard', '/CoordinatorHospital/PendingRequest'],
-    OfficerPolicestation: ['/OfficerPolicestation/OfficerDashboard', '/OfficerPolicestation/PendingApprovals'],
+    OfficerPolicestation: ['/OfficerPolicestation/OfficerDashboard', '/OfficerPolicestation/officerDriverApproval'],
     TrafficPolice: ['/TrafficPolice/TrafficDashboard', '/TrafficPolice/DriverVerification'],
     Driver: ['/Driver/DriverDashboard', '/Driver/TripDetails', '/Driver/DriverVerification'],
   };

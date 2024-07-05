@@ -3,6 +3,12 @@ const path = require('path'); // Import path for resolving paths
 
 module.exports = {
   transpileDependencies: true,
+  pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'src/firebase-messaging-sw.js',
+    }
+  },
 
   configureWebpack: {
     plugins: [
