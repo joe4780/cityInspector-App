@@ -82,6 +82,7 @@ export default {
         OfficerPolicestation: '/OfficerPolicestation/OfficerDashboard',
         Driver: '/Driver/DriverDashboard',
         TrafficPolice: '/TrafficPolice/TrafficDashboard',
+        Citizen: '/citizen/citizenDashboard',
       };
 
       const targetDashboard = dashboardRoutes[userRole];

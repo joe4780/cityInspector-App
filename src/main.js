@@ -8,6 +8,7 @@ import Toast, { POSITION } from 'vue-toastification';
 import 'vue-toastification/dist/index.css';
 import { getMessaging, onMessage } from 'firebase/messaging';
 import { initializeDarkMode } from './services/darkmodeService';
+import 'firebase/storage'; 
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -15,7 +16,7 @@ import {
   faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, 
   faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, 
   faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, 
-  faUserShield, faUserTie, faHospitalUser, faTrafficLight 
+  faUserShield, faUserTie, faHospitalUser, faTrafficLight, faListUl, faExclamationCircle 
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add FontAwesome icons to the library
@@ -23,7 +24,7 @@ library.add(
   faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, 
   faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, 
   faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, 
-  faUserShield, faUserTie, faHospitalUser, faTrafficLight
+  faUserShield, faUserTie, faHospitalUser, faTrafficLight,faListUl, faExclamationCircle
 );
 
 // Firebase configuration (replace with your own config)

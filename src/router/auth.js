@@ -19,6 +19,7 @@ export default function authMiddleware(to, from, next) {
     OfficerPolicestation: ['/OfficerPolicestation/OfficerDashboard', '/OfficerPolicestation/officerDriverApproval'],
     TrafficPolice: ['/TrafficPolice/TrafficDashboard', '/TrafficPolice/DriverVerification'],
     Driver: ['/Driver/DriverDashboard', '/Driver/TripDetails', '/Driver/DriverVerification'],
+    Citizen: ['/citizen/citizenDashboard', '/citizen/myIncidents', '/citizen/reportIncident'],
   };
 
   // Check if the user's role is allowed to access the requested route

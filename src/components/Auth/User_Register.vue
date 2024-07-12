@@ -26,8 +26,21 @@
           <option value="CoordinatorHospital">CoordinatorHospital</option>
           <option value="TrafficPolice">TrafficPolice</option>
           <option value="Admin">Admin</option>
+          <option value="Citizen">Citizen</option> <!-- New option for Citizen -->
         </select>
       </div>
+      <!-- Additional fields for Citizen registration -->
+      <template v-if="form.role === 'Citizen'">
+        <div class="form-group">
+          <label for="address">Address</label>
+          <input v-model="form.address" type="text" id="address" required>
+        </div>
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input v-model="form.age" type="number" id="age" required>
+        </div>
+      </template>
+      
       <button type="submit">Register</button>
       <div v-if="loading" class="loading-indicator">
         Loading...
@@ -53,6 +66,8 @@ export default {
       fullName: '',
       phoneNumber: '',
       role: 'Driver',
+      address: '', // New field for Citizen registration
+      age: 0, // New field for Citizen registration
     });
     const loading = ref(false);
     const toast = useToast();
@@ -71,6 +86,8 @@ export default {
           fullName: form.value.fullName,
           phoneNumber: form.value.phoneNumber,
           role: form.value.role,
+          address: form.value.address, // Save address for Citizen
+          age: form.value.age, // Save age for Citizen
         });
 
         if (form.value.role === 'Admin') {
@@ -86,6 +103,8 @@ export default {
         form.value.fullName = '';
         form.value.phoneNumber = '';
         form.value.role = 'Driver';
+        form.value.address = ''; // Clear address field
+        form.value.age = 0; // Clear age field
 
         toast.success("Registration successful!");
         router.push('/');

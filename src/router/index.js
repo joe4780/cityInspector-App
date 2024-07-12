@@ -24,6 +24,9 @@ import DriverList from '@/components/DriverList.vue';
 import AddDriver from '@/components/Admin/AddDriver.vue';
 import DriverNotification from '@/components/DriverNotification.vue';
 import DarkModeSwitch from '@/components/DarkModeSwitch.vue';
+import myIncidents from '@/components/citizen/myIncidents.vue';
+import reportIncident from '@/components/citizen/reportIncident.vue';
+import citizenDashboard from '@/components/citizen/citizenDashboard.vue';
 import officerDriverApproval from '@/components/OfficerPolicestation/officerDriverApproval.vue';
 
 
@@ -43,6 +46,9 @@ const routes = [
       { path: 'OfficerPolicestation/OfficerDashboard', component: OfficerDashboard },
       { path: 'Driver/DriverDashboard', component: DriverDashboard },
       { path: 'TrafficPolice/TrafficDashboard', component: TrafficDashboard },
+      { path: 'citizen/citizenDashboard', component: citizenDashboard},
+      { path: 'citizen/myIncidents', component: myIncidents},
+      { path: 'citizen/reportIncident', component: reportIncident},
       { path: 'User_Profile', component: User_Profile },
       { path: 'Admin/AddVehicle', component: AddVehicle },
       { path: 'Admin/EditVehicle', component:EditVehicle},

@@ -3,6 +3,7 @@
     <header class="header">
       <h1>City Inspector</h1>
       <p>Your go-to solution for city inspection</p>
+      <p>Join us in upholding standards and serving our communities with excellence.</p>
       <div class="btn-group">
         <router-link to="/User_Login" class="btn">Login</router-link>
         <router-link to="/User_Register" class="btn">Register</router-link>
