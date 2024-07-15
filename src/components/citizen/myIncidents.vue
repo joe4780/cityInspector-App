@@ -11,9 +11,8 @@
     </div>
 
     <div v-for="incident in incidents" :key="incident.id" class="incident-card">
-      <h3>{{ incident.title }}</h3>
-      <p><strong>Category:</strong> {{ incident.category }}</p>
-      <p><strong>Description:</strong> {{ incident.description }}</p>
+      <p><strong>Vehicle Type:</strong> {{ incident.Vehicle_Type }}</p>
+      <p><strong>Crime:</strong> {{ incident.crime }}</p>
       <p><strong>Status:</strong> {{ incident.status }}</p>
       <hr>
     </div>
@@ -21,13 +20,15 @@
 </template>
 
 <script>
-// Remove the 'ref' import since it's not used
 import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
   name: 'myIncidents',
-  FontAwesomeIcon,
+  components: {
+    FontAwesomeIcon
+  },
   data() {
     return {
       incidents: [],
@@ -36,22 +37,38 @@ export default {
   },
   async created() {
     this.loading = true;
-    await this.fetchIncidents();
-    this.loading = false;
+    try {
+      await this.fetchIncidents();
+    } catch (error) {
+      console.error('Error during fetchIncidents:', error);
+    } finally {
+      this.loading = false;
+    }
   },
   methods: {
     async fetchIncidents() {
       try {
         const db = getFirestore();
-        const user = 'currentUserId'; // Replace with actual user ID or use Firebase Auth to get current user
-        const q = query(collection(db, 'incidents'), where('userId', '==', user));
+        const auth = getAuth();
+        const user = auth.currentUser;
+
+        if (!user) {
+          console.error('No user is currently authenticated.');
+          return;
+        }
+
+        const userId = user.uid;
+        const q = query(collection(db, 'incidents'), where('userId', '==', userId));
         const querySnapshot = await getDocs(q);
-        
+
+        if (querySnapshot.empty) {
+          console.warn('No incidents found for user:', userId);
+        }
+
         this.incidents = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          title: doc.data().title,
-          category: doc.data().category,
-          description: doc.data().description,
+          Vehicle_Type: doc.data().Vehicle_Type,
+          crime: doc.data().crime,
           status: doc.data().status
         }));
       } catch (error) {

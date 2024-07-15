@@ -10,8 +10,8 @@
         <input v-model="incident.Vehicle_Type" type="text" id="vehicleType" required>
       </div>
       <div class="form-group">
-        <label for="category">Crime</label>
-        <input v-model="incident.category" type="text" id="crime" required>
+        <label for="crime">Crime</label>
+        <input v-model="incident.crime" type="text" id="crime" required>
       </div>
       <div class="form-group">
         <label for="description">Description</label>

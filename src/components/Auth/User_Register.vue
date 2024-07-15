@@ -26,7 +26,7 @@
           <option value="CoordinatorHospital">CoordinatorHospital</option>
           <option value="TrafficPolice">TrafficPolice</option>
           <option value="Admin">Admin</option>
-          <option value="Citizen">Citizen</option> <!-- New option for Citizen -->
+          <option value="Citizen">Citizen</option> 
         </select>
       </div>
       <!-- Additional fields for Citizen registration -->
