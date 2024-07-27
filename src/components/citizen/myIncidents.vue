@@ -1,6 +1,6 @@
 <template>
   <div class="myIncidents">
-    <h2><font-awesome-icon icon="list-ul" /> Incidents</h2>
+    <h2><font-awesome-icon icon="list-ul" /> My Incidents</h2>
 
     <div v-if="loading" class="loading-indicator">
       Loading...
@@ -69,16 +69,23 @@ export default {
 
 <style scoped>
 .myIncidents {
-  max-width: 800px;
+  max-width: 600px;
   margin: auto;
   padding: 2rem;
 }
 
 .incident-card {
-  margin-bottom: 1rem;
-  padding: 1rem;
-  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
   border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.incident-card p {
+  margin: 0.5rem 0;
 }
 
 .loading-indicator {
