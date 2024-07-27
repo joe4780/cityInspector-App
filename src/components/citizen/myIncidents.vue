@@ -1,16 +1,16 @@
 <template>
   <div class="myIncidents">
-    <h2><font-awesome-icon icon="list-ul" /> My Incidents</h2>
+    <h2><font-awesome-icon icon="list-ul" /> Incidents</h2>
 
     <div v-if="loading" class="loading-indicator">
       Loading...
     </div>
 
-    <div v-if="incidents.length === 0 && !loading">
+    <div v-else-if="incidents.length === 0">
       <p>No incidents reported.</p>
     </div>
 
-    <div v-for="incident in incidents" :key="incident.id" class="incident-card">
+    <div v-else v-for="incident in incidents" :key="incident.id" class="incident-card">
       <p><strong>Vehicle Type:</strong> {{ incident.Vehicle_Type }}</p>
       <p><strong>Crime:</strong> {{ incident.crime }}</p>
       <p><strong>Status:</strong> {{ incident.status }}</p>
@@ -20,8 +20,7 @@
 </template>
 
 <script>
-import { getFirestore, collection, query, where, getDocs } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
@@ -32,47 +31,36 @@ export default {
   data() {
     return {
       incidents: [],
-      loading: false
+      loading: true
     };
   },
-  async created() {
-    this.loading = true;
-    try {
-      await this.fetchIncidents();
-    } catch (error) {
-      console.error('Error during fetchIncidents:', error);
-    } finally {
-      this.loading = false;
-    }
+  created() {
+    this.fetchIncidents();
   },
   methods: {
     async fetchIncidents() {
       try {
         const db = getFirestore();
-        const auth = getAuth();
-        const user = auth.currentUser;
+        console.log('Fetching all incidents');
 
-        if (!user) {
-          console.error('No user is currently authenticated.');
-          return;
-        }
+        const querySnapshot = await getDocs(collection(db, 'incidents'));
 
-        const userId = user.uid;
-        const q = query(collection(db, 'incidents'), where('userId', '==', userId));
-        const querySnapshot = await getDocs(q);
+        console.log('Number of documents:', querySnapshot.size);
 
         if (querySnapshot.empty) {
-          console.warn('No incidents found for user:', userId);
+          console.warn('No incidents found');
         }
 
         this.incidents = querySnapshot.docs.map(doc => ({
           id: doc.id,
-          Vehicle_Type: doc.data().Vehicle_Type,
-          crime: doc.data().crime,
-          status: doc.data().status
+          ...doc.data()
         }));
+
+        console.log('Fetched incidents:', this.incidents);
       } catch (error) {
         console.error('Error fetching incidents:', error);
+      } finally {
+        this.loading = false;
       }
     }
   }

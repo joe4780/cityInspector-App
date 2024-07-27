@@ -16,7 +16,7 @@ import {
   faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, 
   faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, 
   faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, 
-  faUserShield, faUserTie, faHospitalUser, faTrafficLight, faListUl, faExclamationCircle 
+  faUserShield, faUserTie, faHospitalUser, faTrafficLight, faListUl, faExclamationCircle, faExclamationTriangle
 } from '@fortawesome/free-solid-svg-icons';
 
 // Add FontAwesome icons to the library
@@ -24,7 +24,7 @@ library.add(
   faUserCheck, faBell, faMoon, faSun, faInfoCircle, faCheck, faTimes, 
   faTrashAlt, faSpinner, faUserPlus, faUsers, faCar, faClock, faPlusCircle, 
   faUserCog, faHistory, faEdit, faAmbulance, faUser, faSignOutAlt, faList, 
-  faUserShield, faUserTie, faHospitalUser, faTrafficLight,faListUl, faExclamationCircle
+  faUserShield, faUserTie, faHospitalUser, faTrafficLight,faListUl, faExclamationCircle, faExclamationTriangle
 );
 
 // Firebase configuration (replace with your own config)

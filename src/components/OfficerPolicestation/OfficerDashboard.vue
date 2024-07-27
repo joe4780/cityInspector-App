@@ -1,7 +1,6 @@
 <template>
   <BaseLayout>
     <div class="officer-dashboard">
-      <!-- Sidebar navigation -->
       <nav>
         <div class="nav-item">
           <router-link to="/PendingRequest" class="nav-link">
@@ -18,21 +17,29 @@
             <font-awesome-icon icon="history" />Approval History
           </router-link>
         </div>
+        <div class="nav-item">
+          <router-link to="/ManageIncidents" class="nav-link">
+            <font-awesome-icon icon="exclamation-triangle" /> Manage Incidents
+          </router-link>
+        </div>
       </nav>
-
-      <!-- Main content area -->
       <main>
         <h1>
           <font-awesome-icon icon="user-shield" /> Officer Dashboard
         </h1>
-
-        <!-- Rounded container for trips count -->
         <div class="stats-container">
           <div class="statistics-card">
             <font-awesome-icon icon="car" class="statistics-icon" />
             <div class="statistics-info">
               <h3>New Trips</h3>
               <p>{{ tripsCount }}</p>
+            </div>
+          </div>
+          <div class="statistics-card">
+            <font-awesome-icon icon="truck" class="statistics-icon" />
+            <div class="statistics-info">
+              <h3>GK Vehicles incidents</h3>
+              <p>{{ gkVehiclesCount }}</p>
             </div>
           </div>
         </div>
@@ -42,7 +49,7 @@
 </template>
 
 <script>
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { ref, onMounted } from 'vue';
 
@@ -52,24 +59,31 @@ export default {
     FontAwesomeIcon,
   },
   setup() {
-    const tripsCount = ref(0); // Initialize trips count
+    const tripsCount = ref(0);
+    const gkVehiclesCount = ref(0);
 
-    const fetchTripsCount = async () => {
+    const fetchCounts = async () => {
       const db = getFirestore();
       try {
-        const querySnapshot = await getDocs(collection(db, "trips"));
-        tripsCount.value = querySnapshot.size; // Set the number of trips
+        const tripsQuery = collection(db, "trips");
+        const tripsSnapshot = await getDocs(tripsQuery);
+        tripsCount.value = tripsSnapshot.size;
+
+        const gkVehiclesQuery = query(collection(db, "incidents"), where("Vehicle_Type", "==", "GK"));
+        const gkVehiclesSnapshot = await getDocs(gkVehiclesQuery);
+        gkVehiclesCount.value = gkVehiclesSnapshot.size;
       } catch (error) {
-        console.error('Error fetching trips count:', error);
+        console.error('Error fetching counts:', error);
       }
     };
 
     onMounted(() => {
-      fetchTripsCount();
+      fetchCounts();
     });
 
     return {
       tripsCount,
+      gkVehiclesCount,
     };
   },
 };
@@ -128,6 +142,7 @@ h1 .fa-icon {
   display: flex;
   justify-content: left; /* Center align the stats container */
   margin-top: 2rem;
+  gap: 1rem;
 }
 
 .statistics-card {

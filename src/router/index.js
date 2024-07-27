@@ -27,6 +27,7 @@ import DarkModeSwitch from '@/components/DarkModeSwitch.vue';
 import myIncidents from '@/components/citizen/myIncidents.vue';
 import reportIncident from '@/components/citizen/reportIncident.vue';
 import citizenDashboard from '@/components/citizen/citizenDashboard.vue';
+import ManageIncidents from '@/components/ManageIncidents.vue';
 import officerDriverApproval from '@/components/OfficerPolicestation/officerDriverApproval.vue';
 
 
@@ -45,6 +46,7 @@ const routes = [
       { path: 'CoordinatorHospital/CoordinatorDashboard', component: CoordinatorDashboard },
       { path: 'OfficerPolicestation/OfficerDashboard', component: OfficerDashboard },
       { path: 'Driver/DriverDashboard', component: DriverDashboard },
+      { path: 'ManageIncidents', component: ManageIncidents},
       { path: 'TrafficPolice/TrafficDashboard', component: TrafficDashboard },
       { path: 'citizen/citizenDashboard', component: citizenDashboard},
       { path: 'citizen/myIncidents', component: myIncidents},
