@@ -1,4 +1,4 @@
-# frontend
+# This application is focused on monitoring government vehicles from Ambulances in hospitals to GK'S in police station.it involves drivers obtaining a central approval of trips from authorized personnels and also the traffic police entering the vehicle registration number to see its destination previewed on a map without stopiing the vehicle.
 
 ## Project setup
 ```
